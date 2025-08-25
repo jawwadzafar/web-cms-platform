@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, Clock, User, ArrowLeft, Share2, Bookmark, MessageCircle } from 'lucide-react'
+import { Calendar, Clock, User, Share2, Bookmark, MessageCircle } from 'lucide-react'
 import { api } from '@/lib/api-client'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -67,23 +67,55 @@ interface RelatedPost {
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
-    const response = await api.posts.getBySlug(params.slug)
-    const post = response.data.docs[0]
-    
-    if (!post) {
+    // Validate params
+    if (!params.slug || typeof params.slug !== 'string') {
+      console.log('Invalid slug params:', params)
       return {
-        title: 'Post Not Found',
+        title: 'Blog Post Not Found',
         description: 'The requested blog post could not be found.',
       }
     }
 
+    console.log('Generating metadata for slug:', params.slug)
+
+    const response = await api.posts.getBySlug(params.slug)
+    console.log('API response:', response)
+    
+    const posts = response.data.docs || []
+    console.log('Posts found:', posts.length)
+    
+    if (!posts || posts.length === 0) {
+      console.log('No posts found for slug:', params.slug)
+      return {
+        title: 'Blog Post Not Found',
+        description: 'The requested blog post could not be found.',
+      }
+    }
+    
+    const post = posts[0]
+    console.log('Post data:', { title: post.title, excerpt: post.excerpt })
+    
+    // Validate post data
+    if (!post || !post.title || !post.excerpt) {
+      console.log('Invalid post data:', post)
+      return {
+        title: 'Blog Post',
+        description: 'Read our latest blog post.',
+      }
+    }
+
+    const title = post.meta?.title || post.title
+    const description = post.meta?.description || post.excerpt
+    
+    console.log('Final metadata:', { title, description })
+
     return {
-      title: post.meta?.title || post.title,
-      description: post.meta?.description || post.excerpt,
+      title,
+      description,
       keywords: post.meta?.keywords || post.tags?.map((t: any) => t.name).join(', '),
       openGraph: {
-        title: post.meta?.title || post.title,
-        description: post.meta?.description || post.excerpt,
+        title,
+        description,
         type: 'article',
         images: post.meta?.ogImage ? [post.meta.ogImage.url] : post.featuredImage ? [post.featuredImage.url] : [],
         publishedTime: post.publishedDate,
@@ -92,8 +124,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       },
       twitter: {
         card: 'summary_large_image',
-        title: post.meta?.title || post.title,
-        description: post.meta?.description || post.excerpt,
+        title,
+        description,
         images: post.meta?.ogImage ? [post.meta.ogImage.url] : post.featuredImage ? [post.featuredImage.url] : [],
       },
     }
@@ -230,44 +262,34 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           
           {/* Content Overlay */}
           <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-            {/* Back Navigation */}
-            <div className="absolute top-8 left-0">
-              <Button variant="ghost" asChild className="gap-2 text-white hover:bg-white/10">
-                <Link href="/blog">
-                  <ArrowLeft className="h-4 w-4" />
-                  Back to Blog
-                </Link>
-              </Button>
-            </div>
-            
             {/* Category and Date */}
-            <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="flex items-center justify-center gap-4 mb-8">
               {post.category && (
-                <Badge variant="outline" className="bg-white/10 border-white/20 text-white">
+                <Badge variant="outline" className="bg-white/10 border-white/20 text-white px-4 py-2 text-sm">
                   {post.category.name}
                 </Badge>
               )}
-              <span className="text-white/80 text-sm">
+              <span className="text-white/80 text-sm px-3 py-1 bg-white/10 rounded-full">
                 {formatDateTime(post.publishedDate)}
               </span>
             </div>
             
             {/* Title */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-8 leading-tight">
               {post.title}
             </h1>
             
             {/* Excerpt */}
-            <p className="text-xl md:text-2xl font-light text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl font-light text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               {post.excerpt}
             </p>
             
             {/* Author and Meta */}
-            <div className="flex items-center justify-center gap-6 text-white/80">
+            <div className="flex items-center justify-center gap-8 text-white/80 mb-8">
               {post.author && (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {post.author.avatar && (
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/20">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white/20">
                       <Image
                         src={post.author.avatar.url}
                         alt={post.author.name}
@@ -277,7 +299,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                     </div>
                   )}
                   <div className="text-left">
-                    <p className="font-medium text-white">{post.author.name}</p>
+                    <p className="font-medium text-white text-lg">{post.author.name}</p>
                     {post.author.bio && (
                       <p className="text-sm text-white/70">{post.author.bio}</p>
                     )}
@@ -285,25 +307,25 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 </div>
               )}
               
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-6 text-sm">
                 <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{estimatedReadTime} min read</span>
+                  <Clock className="h-5 w-5" />
+                  <span className="text-lg">{estimatedReadTime} min read</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatDateTime(post.publishedDate)}</span>
+                  <Calendar className="h-5 w-5" />
+                  <span className="text-lg">{formatDateTime(post.publishedDate)}</span>
                 </div>
               </div>
             </div>
             
             {/* Action Buttons */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <Button variant="ghost" size="lg" className="gap-2 text-white hover:bg-white/10">
+            <div className="flex items-center justify-center gap-6 mt-10">
+              <Button variant="ghost" size="lg" className="gap-3 text-white hover:bg-white/10 px-6 py-3">
                 <Bookmark className="h-5 w-5" />
-                Save
+                Save Article
               </Button>
-              <Button variant="ghost" size="lg" className="gap-2 text-white hover:bg-white/10">
+              <Button variant="ghost" size="lg" className="gap-3 text-white hover:bg-white/10 px-6 py-3">
                 <Share2 className="h-5 w-5" />
                 Share
               </Button>
@@ -323,17 +345,106 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="max-w-5xl mx-auto px-6">
             {/* Main Content */}
             <main className="w-full">
+              {/* Content Introduction */}
+              <div className="mb-16 text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full mb-6">
+                  <MessageCircle className="h-8 w-8 text-blue-600" />
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-4">Article Content</h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 mx-auto rounded-full"></div>
+              </div>
+
               {/* Article Content with Better Spacing */}
-              <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:text-gray-800 prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-h1:text-4xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-12 prose-h2:text-3xl prose-h2:font-semibold prose-h2:mb-6 prose-h2:mt-10 prose-h3:text-2xl prose-h3:font-semibold prose-h3:mb-4 prose-h3:mt-8 prose-p:text-lg prose-p:leading-relaxed prose-p:mb-6 prose-ul:mb-6 prose-ol:mb-6 prose-li:mb-2 prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-700 prose-blockquote:bg-blue-50 prose-blockquote:py-4 prose-blockquote:rounded-r-lg">
+              <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:text-gray-800 prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-h1:text-4xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-16 prose-h2:text-3xl prose-h2:font-semibold prose-h2:mb-6 prose-h2:mt-12 prose-h3:text-2xl prose-h3:font-semibold prose-h2:mb-4 prose-h3:mt-10 prose-p:text-lg prose-p:leading-relaxed prose-p:mb-8 prose-p:mt-6 prose-ul:mb-8 prose-ol:mb-8 prose-li:mb-3 prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-8 prose-blockquote:italic prose-blockquote:text-gray-700 prose-blockquote:bg-blue-50 prose-blockquote:py-6 prose-blockquote:rounded-r-lg prose-blockquote:my-8 prose-hr:my-12 prose-hr:border-gray-200 prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8">
                 {post.content ? (
-                  <RichText data={post.content} />
+                  <>
+                    {/* Debug: Show content structure */}
+                    {process.env.NODE_ENV === 'development' && (
+                      <div className="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <h4 className="text-sm font-semibold text-yellow-800 mb-2">Debug Info (Development Only)</h4>
+                        <p className="text-xs text-yellow-700 mb-2">Content Type: {typeof post.content}</p>
+                        <p className="text-xs text-yellow-700 mb-2">Content Keys: {post.content ? Object.keys(post.content).join(', ') : 'None'}</p>
+                        <details className="text-xs text-yellow-700">
+                          <summary>Raw Content (Click to expand)</summary>
+                          <pre className="mt-2 text-xs overflow-auto bg-white p-2 rounded border">
+                            {JSON.stringify(post.content, null, 2)}
+                          </pre>
+                        </details>
+                      </div>
+                    )}
+                    
+                    <RichText data={post.content} />
+                    
+                    {/* Fallback: If RichText doesn't work, show raw content */}
+                    {process.env.NODE_ENV === 'development' && (
+                      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <h4 className="text-sm font-semibold text-blue-800 mb-2">Fallback Content Renderer</h4>
+                        <div className="text-sm text-blue-700">
+                          {post.content?.root?.children?.map((node: any, index: number) => {
+                            if (node.type === 'paragraph') {
+                              return (
+                                <p key={index} className="mb-4">
+                                  {node.children?.map((child: any, childIndex: number) => {
+                                    if (child.type === 'text') {
+                                      return <span key={childIndex}>{child.text}</span>
+                                    }
+                                    return null
+                                  })}
+                                </p>
+                              )
+                            }
+                            if (node.type === 'heading') {
+                              const level = node.tag || 'h2'
+                              if (level === 'h1') {
+                                return (
+                                  <h1 key={index} className="text-3xl font-bold mb-4 mt-8">
+                                    {node.children?.map((child: any, childIndex: number) => {
+                                      if (child.type === 'text') {
+                                        return <span key={childIndex}>{child.text}</span>
+                                      }
+                                      return null
+                                    })}
+                                  </h1>
+                                )
+                              }
+                              if (level === 'h2') {
+                                return (
+                                  <h2 key={index} className="text-2xl font-bold mb-4 mt-8">
+                                    {node.children?.map((child: any, childIndex: number) => {
+                                      if (child.type === 'text') {
+                                        return <span key={childIndex}>{child.text}</span>
+                                      }
+                                      return null
+                                    })}
+                                  </h2>
+                                )
+                              }
+                              if (level === 'h3') {
+                                return (
+                                  <h3 key={index} className="text-xl font-bold mb-4 mt-8">
+                                    {node.children?.map((child: any, childIndex: number) => {
+                                      if (child.type === 'text') {
+                                        return <span key={childIndex}>{child.text}</span>
+                                      }
+                                      return null
+                                    })}
+                                  </h3>
+                                )
+                              }
+                            }
+                            return null
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 ) : (
-                  <div className="text-center py-16">
-                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
-                      <MessageCircle className="h-10 w-10 text-gray-400" />
+                  <div className="text-center py-20">
+                    <div className="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-8">
+                      <MessageCircle className="h-12 w-12 text-gray-400" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4 text-gray-900">Content Coming Soon</h3>
-                    <p className="text-gray-600 max-w-md mx-auto">
+                    <h3 className="text-3xl font-semibold mb-6 text-gray-900">Content Coming Soon</h3>
+                    <p className="text-gray-600 max-w-lg mx-auto text-lg">
                       This article's content is being prepared. Check back soon for the full article.
                     </p>
                   </div>

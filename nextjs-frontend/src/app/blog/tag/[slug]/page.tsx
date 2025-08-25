@@ -98,18 +98,6 @@ export default async function TagPage({ params }: { params: { slug: string } }) 
 
     return (
       <div className="min-h-screen bg-background">
-        {/* Back Navigation */}
-        <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container mx-auto px-4 py-4">
-            <Button variant="ghost" asChild className="gap-2">
-              <Link href="/blog">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Blog
-              </Link>
-            </Button>
-          </div>
-        </div>
-
         {/* Tag Header */}
         <section className="py-16 bg-gradient-to-br from-primary/5 via-background to-muted/30">
           <div className="container mx-auto px-4 text-center">
