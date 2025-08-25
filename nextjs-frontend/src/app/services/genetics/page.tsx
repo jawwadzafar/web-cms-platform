@@ -141,16 +141,7 @@ export default function GeneticsPage() {
   return (
     <div className="min-h-screen">
       {/* Back Navigation */}
-      <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 py-4">
-          <Button variant="ghost" asChild className="gap-2">
-            <Link href="/services">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Services
-            </Link>
-          </Button>
-        </div>
-      </div>
+
 
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-green-50 via-background to-green-100 overflow-hidden">

@@ -55,16 +55,7 @@ export default function MolecularDiagnosticsPage() {
   return (
     <div className="min-h-screen">
       {/* Back Navigation */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <Button variant="ghost" asChild>
-            <Link href="/services">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Services
-            </Link>
-          </Button>
-        </div>
-      </div>
+
 
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-r from-blue-900 to-blue-800">
@@ -80,15 +71,7 @@ export default function MolecularDiagnosticsPage() {
         
         <div className="relative container mx-auto px-4">
           <div className="max-w-4xl">
-            <div className="mb-6">
-              <Image 
-                src="/images/logos/sanimed-logo-white.png" 
-                alt="Sanimed International" 
-                width={200} 
-                height={45}
-                className="h-12 w-auto mb-6"
-              />
-            </div>
+ 
             
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center">

@@ -107,15 +107,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         {/* Content */}
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-6xl mx-auto">
-            {/* Back Button */}
-            <div className="mb-8">
-              <Button variant="outline" asChild>
-                <Link href="/services">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Services
-                </Link>
-              </Button>
-            </div>
+
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Main Content */}
