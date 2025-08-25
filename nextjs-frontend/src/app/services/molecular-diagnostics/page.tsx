@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ModernButton } from '@/components/custom'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, Check, Microscope, Phone, Mail, Users, Clock, Award, Globe } from 'lucide-react'
 
@@ -212,14 +213,14 @@ export default function MolecularDiagnosticsPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
+            <ModernButton size="lg" variant="primary">
               <Phone className="mr-2 w-5 h-5" />
               Contact Our Team
-            </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-900">
+            </ModernButton>
+            <ModernButton variant="outline" size="lg">
               <Mail className="mr-2 w-5 h-5" />
               Request Quote
-            </Button>
+            </ModernButton>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-lg mx-auto">

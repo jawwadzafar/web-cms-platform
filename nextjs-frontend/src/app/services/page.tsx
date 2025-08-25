@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { ModernButton } from '@/components/custom'
 import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, MapPin } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -103,15 +103,16 @@ export default function ServicesPage() {
                 </div>
               </div>
               
-              <Button 
+              <ModernButton 
                 asChild 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-none font-normal"
+                variant="service"
+                size="lg"
               >
                 <Link href="/services/molecular-diagnostics">
                   Explore Service
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
-              </Button>
+              </ModernButton>
             </div>
             
             <div className="relative h-[600px]">
@@ -168,15 +169,16 @@ export default function ServicesPage() {
                 </div>
               </div>
               
-              <Button 
+              <ModernButton 
                 asChild 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-none font-normal"
+                variant="service-emerald"
+                size="lg"
               >
                 <Link href="/services/genetics">
                   Explore Service
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
-              </Button>
+              </ModernButton>
             </div>
           </div>
 
@@ -215,15 +217,16 @@ export default function ServicesPage() {
                 </div>
               </div>
               
-              <Button 
+              <ModernButton 
                 asChild 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-none font-normal"
+                variant="service-purple"
+                size="lg"
               >
                 <Link href="/services/clinical-diagnostics">
                   Explore Service
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
-              </Button>
+              </ModernButton>
             </div>
             
             <div className="relative h-[600px]">
@@ -267,12 +270,12 @@ export default function ServicesPage() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-gray-900 hover:bg-black text-white px-8 py-3 rounded-none font-normal">
+            <ModernButton size="lg" variant="secondary">
               Contact Our Team
-            </Button>
-            <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-50 px-8 py-3 rounded-none font-normal">
+            </ModernButton>
+            <ModernButton variant="outline-dark" size="lg">
               Request Information
-            </Button>
+            </ModernButton>
           </div>
         </div>
       </section>

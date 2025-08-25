@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { ModernButton } from '@/components/custom'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu, X, Phone, Mail } from 'lucide-react'
 
@@ -56,9 +57,9 @@ export function Header() {
                 <span>customercare@sanimedgroup.com</span>
               </div>
             </div>
-            <Button asChild className="bg-blue-600 hover:bg-blue-700">
+            <ModernButton asChild variant="service">
               <Link href="/contact">Get Started</Link>
-            </Button>
+            </ModernButton>
           </div>
 
           {/* Mobile menu button */}
@@ -139,9 +140,9 @@ export function Header() {
                       <span>customercare@sanimedgroup.com</span>
                     </div>
                   </div>
-                  <Button asChild className="w-full mt-6 bg-blue-600 hover:bg-blue-700">
+                  <ModernButton asChild variant="service" className="w-full mt-6">
                     <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
-                  </Button>
+                  </ModernButton>
                 </div>
               </nav>
             </SheetContent>

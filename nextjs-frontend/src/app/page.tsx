@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
+import { ModernButton, AnimatedBackground } from '@/components/custom'
 import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, Users, Globe } from 'lucide-react'
 import { api } from '@/lib/api-client'
 
@@ -56,14 +56,20 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center bg-black overflow-hidden">
         <div className="absolute inset-0">
+          {/* Animated Background */}
+          <AnimatedBackground className="absolute inset-0" />
+          
+          {/* Hero Image */}
           <Image
-            src="/images/hero/medical-laboratory-hero.jpg"
-            alt="Advanced Medical Laboratory"
+            src="/images/hero/homepage-hero.jpg"
+            alt="Advanced Medical Research"
             fill
-            className="object-cover"
+            className="object-cover opacity-20"
             priority
           />
-          <div className="absolute inset-0 bg-black/70" />
+          
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/75" />
         </div>
         
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
@@ -88,26 +94,25 @@ export default async function HomePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button 
+            <ModernButton 
               asChild 
-              size="lg" 
-              className="bg-white text-black hover:bg-gray-100 px-8 py-4 rounded-none font-normal text-lg"
+              variant="primary"
+              size="xl"
             >
               <Link href="/services">
                 Explore Services
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              asChild 
-              className="border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-normal text-lg"
+            </ModernButton>
+            <ModernButton 
+              variant="outline"
+              size="xl"
+              asChild
             >
               <Link href="/contact">
                 Contact Our Experts
               </Link>
-            </Button>
+            </ModernButton>
           </div>
           
           <div className="flex justify-center">
@@ -143,18 +148,30 @@ export default async function HomePage() {
           <div className="grid lg:grid-cols-3 gap-16">
             {/* Molecular Diagnostics */}
             <div className="group">
-              <div className="relative h-80 mb-8 overflow-hidden">
-                <Image
-                  src="/images/services/molecular-diagnostics.jpg"
-                  alt="Molecular Diagnostics"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-6 left-6">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                    <Microscope className="w-6 h-6 text-white" />
+              <div className="relative mb-8">
+                {/* 3D Border Effect */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-blue-500 to-blue-700 transform rotate-1 rounded-lg opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:rotate-2"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 to-blue-800 transform -rotate-1 rounded-lg opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:-rotate-2"></div>
+                
+                {/* Main Image */}
+                <div className="relative h-80 overflow-hidden rounded-lg shadow-2xl">
+                  <Image
+                    src="/images/services/molecular-diagnostics.jpg"
+                    alt="Molecular Diagnostics"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  
+                  {/* Floating Icon */}
+                  <div className="absolute top-6 left-6">
+                    <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                      <Microscope className="w-7 h-7 text-white" />
+                    </div>
                   </div>
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-blue-400/30 to-transparent"></div>
                 </div>
               </div>
               
@@ -172,33 +189,45 @@ export default async function HomePage() {
                   <div>UAE-wide • 62 Sites • 24-48hr TAT</div>
                 </div>
                 
-                <Button 
+                <ModernButton 
                   asChild 
-                  variant="outline" 
-                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                  variant="outline-dark"
+                  className="w-full"
                 >
                   <Link href="/services/molecular-diagnostics">
                     Learn More
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
-                </Button>
+                </ModernButton>
               </div>
             </div>
 
             {/* Genetics */}
             <div className="group">
-              <div className="relative h-80 mb-8 overflow-hidden">
-                <Image
-                  src="/images/services/genetics.jpg"
-                  alt="Genetics"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-6 left-6">
-                  <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
-                    <Dna className="w-6 h-6 text-white" />
+              <div className="relative mb-8">
+                {/* 3D Border Effect */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500 to-green-700 transform -rotate-1 rounded-lg opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-emerald-600 to-green-800 transform rotate-1 rounded-lg opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
+                
+                {/* Main Image */}
+                <div className="relative h-80 overflow-hidden rounded-lg shadow-2xl">
+                  <Image
+                    src="/images/services/genetics.jpg"
+                    alt="Genetics"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  
+                  {/* Floating Icon */}
+                  <div className="absolute top-6 left-6">
+                    <div className="w-14 h-14 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
+                      <Dna className="w-7 h-7 text-white" />
+                    </div>
                   </div>
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-emerald-400/30 to-transparent"></div>
                 </div>
               </div>
               
@@ -216,33 +245,45 @@ export default async function HomePage() {
                   <div>BRCA1/2 • Lynch Syndrome • Pharmacogenomics</div>
                 </div>
                 
-                <Button 
+                <ModernButton 
                   asChild 
-                  variant="outline" 
-                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                  variant="outline-dark"
+                  className="w-full"
                 >
                   <Link href="/services/genetics">
                     Learn More
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
-                </Button>
+                </ModernButton>
               </div>
             </div>
 
             {/* Clinical Diagnostics */}
             <div className="group">
-              <div className="relative h-80 mb-8 overflow-hidden">
-                <Image
-                  src="/images/services/clinical-diagnostics.jpg"
-                  alt="Clinical Diagnostics"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-6 left-6">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                    <FlaskConical className="w-6 h-6 text-white" />
+              <div className="relative mb-8">
+                {/* 3D Border Effect */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-purple-500 to-indigo-700 transform rotate-1 rounded-lg opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:rotate-2"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-purple-600 to-indigo-800 transform -rotate-1 rounded-lg opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:-rotate-2"></div>
+                
+                {/* Main Image */}
+                <div className="relative h-80 overflow-hidden rounded-lg shadow-2xl">
+                  <Image
+                    src="/images/services/clinical-diagnostics.jpg"
+                    alt="Clinical Diagnostics"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                  
+                  {/* Floating Icon */}
+                  <div className="absolute top-6 left-6">
+                    <div className="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                      <FlaskConical className="w-7 h-7 text-white" />
+                    </div>
                   </div>
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-purple-400/30 to-transparent"></div>
                 </div>
               </div>
               
@@ -260,16 +301,16 @@ export default async function HomePage() {
                   <div>Automated • CAP Certified • Rapid Reporting</div>
                 </div>
                 
-                <Button 
+                <ModernButton 
                   asChild 
-                  variant="outline" 
-                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                  variant="outline-dark"
+                  className="w-full"
                 >
                   <Link href="/services/clinical-diagnostics">
                     Learn More
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
-                </Button>
+                </ModernButton>
               </div>
             </div>
           </div>
@@ -308,16 +349,16 @@ export default async function HomePage() {
             </div>
           </div>
           
-          <Button 
+          <ModernButton 
             asChild 
-            size="lg" 
-            className="bg-gray-900 hover:bg-black text-white px-8 py-3 rounded-none font-normal"
+            variant="secondary"
+            size="lg"
           >
             <Link href="/about">
               About Sanimed
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
-          </Button>
+          </ModernButton>
         </div>
       </section>
 
@@ -333,21 +374,20 @@ export default async function HomePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button 
-              size="lg" 
-              className="bg-white text-black hover:bg-gray-100 px-8 py-4 rounded-none font-normal"
+            <ModernButton 
+              variant="primary"
+              size="lg"
             >
               <Phone className="mr-2 w-5 h-5" />
               Contact Our Team
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-normal"
+            </ModernButton>
+            <ModernButton 
+              variant="outline"
+              size="lg"
             >
               <Mail className="mr-2 w-5 h-5" />
               Request Information
-            </Button>
+            </ModernButton>
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">
