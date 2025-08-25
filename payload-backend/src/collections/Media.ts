@@ -1,9 +1,8 @@
-import { CollectionConfig } from 'payload/types'
+import { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    staticURL: '/media',
     staticDir: '../uploads',
     imageSizes: [
       {
