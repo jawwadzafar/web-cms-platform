@@ -2,11 +2,17 @@ import { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { slugField } from '@/payload/fields/slug'
 
-export const Posts: CollectionConfig = {
-  slug: 'posts',
+// Rename Posts to Articles for more professional branding
+export const Articles: CollectionConfig = {
+  slug: 'articles',
+  labels: {
+    singular: 'Article',
+    plural: 'Articles',
+  },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'published', 'publishedDate', 'updatedAt'],
+    description: 'Create and manage blog articles, news, and content pieces.',
+    defaultColumns: ['title', 'slug', 'status', 'publishedDate', 'author', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
         if (data?.slug) {
@@ -15,9 +21,13 @@ export const Posts: CollectionConfig = {
         return `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog`
       },
     },
+    group: 'Content',
   },
   access: {
     read: () => true, // Public read access
+    create: ({ req }) => !!req.user, // Only authenticated users can create
+    update: ({ req }) => !!req.user, // Only authenticated users can update
+    delete: ({ req }) => !!req.user, // Only authenticated users can delete
   },
   fields: [
     {
@@ -65,18 +75,48 @@ export const Posts: CollectionConfig = {
       hasMany: false,
     },
     {
-      name: 'published',
-      type: 'checkbox',
-      defaultValue: false,
-    },
-    {
       name: 'publishedDate',
       type: 'date',
+      required: true,
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
         },
         position: 'sidebar',
+        description: 'When this article should be published',
+      },
+      defaultValue: () => new Date(),
+    },
+    {
+      name: 'status',
+      type: 'select',
+      options: [
+        {
+          label: 'Draft',
+          value: 'draft',
+        },
+        {
+          label: 'Published',
+          value: 'published',
+        },
+        {
+          label: 'Archived',
+          value: 'archived',
+        },
+      ],
+      defaultValue: 'draft',
+      admin: {
+        position: 'sidebar',
+        description: 'Current status of this article',
+      },
+      required: true,
+    },
+    {
+      name: 'readTime',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+        description: 'Estimated reading time in minutes (auto-calculated if empty)',
       },
     },
     {
@@ -133,8 +173,28 @@ export const Posts: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100,
+        interval: 100, // Auto-save every 100ms
       },
     },
+    maxPerDoc: 50, // Keep last 50 versions
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        // Auto-calculate read time if not provided
+        if (!data?.readTime && data?.content) {
+          const contentString = JSON.stringify(data.content);
+          const wordCount = contentString.split(' ').length;
+          data.readTime = Math.ceil(wordCount / 200); // Average reading speed
+        }
+        
+        // Auto-set published date if publishing for first time
+        if (operation === 'create' && data?.status === 'published' && !data?.publishedDate) {
+          data.publishedDate = new Date();
+        }
+        
+        return data;
+      },
+    ],
   },
 }

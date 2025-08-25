@@ -4,9 +4,14 @@ import { slugField } from '@/payload/fields/slug'
 
 export const Services: CollectionConfig = {
   slug: 'services',
+  labels: {
+    singular: 'Service',
+    plural: 'Services',
+  },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'active', 'updatedAt'],
+    description: 'Manage your company services, pricing, and offerings.',
+    defaultColumns: ['title', 'category', 'pricing.priceRange', 'featured', 'active', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
         if (data?.slug) {
@@ -15,9 +20,21 @@ export const Services: CollectionConfig = {
         return `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/services`
       },
     },
+    group: 'Business',
   },
   access: {
-    read: () => true, // Public read access
+    read: ({ req }) => {
+      // Public can only see active services
+      if (!req.user) {
+        return {
+          active: { equals: true },
+        };
+      }
+      return true; // Admin can see all
+    },
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => !!req.user,
+    delete: ({ req }) => !!req.user,
   },
   fields: [
     {

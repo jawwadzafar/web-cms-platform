@@ -10,7 +10,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
+import { Articles } from './collections/Posts'
 import { Services } from './collections/Services'
 import { Team } from './collections/Team'
 import { Categories } from './collections/Categories'
@@ -32,7 +32,7 @@ export default buildConfig({
       url: ({ data, collection }) => {
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
         
-        if (collection.slug === 'posts' && data?.slug) {
+        if (collection.slug === 'articles' && data?.slug) {
           return `${baseUrl}/blog/${data.slug}`
         }
         if (collection.slug === 'pages' && data?.slug) {
@@ -50,7 +50,7 @@ export default buildConfig({
     Users,
     Media,
     Pages,
-    Posts,
+    Articles,
     Services,
     Team,
     Categories,

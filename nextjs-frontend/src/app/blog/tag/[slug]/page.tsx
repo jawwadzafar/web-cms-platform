@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export async function generateStaticParams() {
   try {
     const tags = await api.tags.getAll({ limit: 100 })
-    return tags.docs?.map((tag) => ({
+    return tags.data.docs?.map((tag) => ({
       slug: tag.slug,
     })) || []
   } catch (error) {
@@ -79,18 +79,18 @@ export default async function TagPage({ params }: { params: { slug: string } }) 
     // Fetch tag and posts
     const [tagResponse, postsResponse] = await Promise.all([
       api.tags.getBySlug(params.slug),
-      api.posts.getAll({
+      api.articles.getAll({
         where: {
           tags: { slug: { equals: params.slug } },
-          published: { equals: true }
+          status: { equals: 'published' }
         },
         sort: '-publishedDate',
         limit: 50
       })
     ])
 
-    const tag: Tag = tagResponse
-    const posts: BlogPost[] = postsResponse.docs || []
+    const tag: Tag = tagResponse.data.docs[0]
+    const posts: BlogPost[] = postsResponse.data.docs || []
 
     if (!tag) {
       notFound()

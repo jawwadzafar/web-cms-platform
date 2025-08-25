@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export async function generateStaticParams() {
   try {
     const categories = await api.categories.getAll({ limit: 50 })
-    return categories.docs?.map((category) => ({
+    return categories.data.docs?.map((category) => ({
       slug: category.slug,
     })) || []
   } catch (error) {
@@ -79,18 +79,18 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     // Fetch category and posts
     const [categoryResponse, postsResponse] = await Promise.all([
       api.categories.getBySlug(params.slug),
-      api.posts.getAll({
+      api.articles.getAll({
         where: {
           category: { slug: { equals: params.slug } },
-          published: { equals: true }
+          status: { equals: 'published' }
         },
         sort: '-publishedDate',
         limit: 50
       })
     ])
 
-    const category: Category = categoryResponse
-    const posts: BlogPost[] = postsResponse.docs || []
+    const category: Category = categoryResponse.data.docs[0]
+    const posts: BlogPost[] = postsResponse.data.docs || []
 
     if (!category) {
       notFound()

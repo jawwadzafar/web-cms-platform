@@ -57,7 +57,7 @@ export default async function BlogPage() {
   try {
     // Fetch blog posts and categories
     const [postsResponse, categoriesResponse] = await Promise.all([
-      api.posts.getAll({ limit: 50, sort: '-publishedDate' }),
+      api.articles.getPublished({ limit: 50, sort: '-publishedDate' }),
       api.categories.getAll({ limit: 20 })
     ])
 

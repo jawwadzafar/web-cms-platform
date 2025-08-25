@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { RichTextRenderer } from '@/components/cms/RichTextRenderer'
+import RichText from '@/components/cms/RichText'
+import { formatDateTime } from '@/lib/utils/formatDateTime'
+import { formatAuthors } from '@/lib/utils/formatAuthors'
 
 interface BlogPost {
   id: string
@@ -64,7 +66,7 @@ interface RelatedPost {
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
-    const response = await api.posts.getBySlug(params.slug)
+    const response = await api.articles.getBySlug(params.slug)
     const post = response.data.docs[0]
     
     if (!post) {
@@ -106,7 +108,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   try {
-    const response = await api.posts.getAll({ limit: 100 })
+    const response = await api.articles.getAll({ limit: 100 })
     return response.data.docs?.map((post) => ({
       slug: post.slug,
     })) || []
@@ -119,7 +121,7 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   try {
     // Fetch the blog post
-    const response = await api.posts.getBySlug(params.slug)
+    const response = await api.articles.getBySlug(params.slug)
     const post = response.data.docs[0]
     
     if (!post) {
@@ -127,16 +129,18 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     }
 
     // Fetch related posts (same category or tags)
-    const relatedPostsResponse = await api.posts.getAll({
+    const relatedPostsResponse = await api.articles.getAll({
       limit: 3,
       where: {
-        or: [
-          { category: { equals: post.category?.id } },
-          { tags: { in: post.tags?.map(t => t.id) || [] } }
-        ],
         and: [
           { id: { not_equals: post.id } },
-          { published: { equals: true } }
+          { status: { equals: 'published' } },
+          {
+            or: [
+              { category: { equals: post.category?.id } },
+              { tags: { in: post.tags?.map(t => t.id) || [] } }
+            ]
+          }
         ]
       }
     })
@@ -172,11 +176,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                     </Badge>
                   )}
                   <span className="text-sm text-muted-foreground">
-                    {new Date(post.publishedDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
+                    {formatDateTime(post.publishedDate)}
                   </span>
                 </div>
 
@@ -240,10 +240,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               )}
 
               {/* Article Content */}
-              <div className="prose prose-lg max-w-none mb-12">
+              <div className="mb-12">
                 {/* Render the rich text content from Payload CMS */}
                 {post.content ? (
-                  <RichTextRenderer content={post.content} />
+                  <RichText data={post.content} />
                 ) : (
                   <div className="text-center py-12">
                     <p className="text-muted-foreground">Content is being prepared...</p>
@@ -271,7 +271,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <footer className="border-t pt-8">
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center gap-4">
-                    <span>Published {new Date(post.publishedDate).toLocaleDateString()}</span>
+                    <span>Published {formatDateTime(post.publishedDate)}</span>
                     <span>•</span>
                     <span>{estimatedReadTime} min read</span>
                   </div>
@@ -343,7 +343,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                                 {relatedPost.title}
                               </h4>
                               <p className="text-xs text-muted-foreground mt-1">
-                                {new Date(relatedPost.publishedDate).toLocaleDateString()}
+                                {formatDateTime(relatedPost.publishedDate)}
                               </p>
                             </div>
                           </div>

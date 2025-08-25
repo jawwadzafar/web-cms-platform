@@ -70,7 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
-    posts: Post;
+    articles: Article;
     services: Service;
     team: Team;
     categories: Category;
@@ -87,7 +87,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -360,10 +360,12 @@ export interface MediaBlock {
   blockType: 'mediaBlock';
 }
 /**
+ * Create and manage blog articles, news, and content pieces.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "articles".
  */
-export interface Post {
+export interface Article {
   id: string;
   title: string;
   /**
@@ -389,8 +391,18 @@ export interface Post {
   category: string | Category;
   tags?: (string | Tag)[] | null;
   author?: (string | null) | Team;
-  published?: boolean | null;
-  publishedDate?: string | null;
+  /**
+   * When this article should be published
+   */
+  publishedDate: string;
+  /**
+   * Current status of this article
+   */
+  status: 'draft' | 'published' | 'archived';
+  /**
+   * Estimated reading time in minutes (auto-calculated if empty)
+   */
+  readTime?: number | null;
   /**
    * Display this post prominently on the homepage
    */
@@ -530,6 +542,8 @@ export interface Team {
   createdAt: string;
 }
 /**
+ * Manage your company services, pricing, and offerings.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
@@ -825,8 +839,8 @@ export interface PayloadLockedDocument {
         value: string | Page;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
+        relationTo: 'articles';
+        value: string | Article;
       } | null)
     | ({
         relationTo: 'services';
@@ -1037,9 +1051,9 @@ export interface MediaBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "articles_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
   excerpt?: T;
   featuredImage?: T;
@@ -1047,8 +1061,9 @@ export interface PostsSelect<T extends boolean = true> {
   category?: T;
   tags?: T;
   author?: T;
-  published?: T;
   publishedDate?: T;
+  status?: T;
+  readTime?: T;
   featured?: T;
   meta?:
     | T
