@@ -1,6 +1,6 @@
 # 🚀 System CMS - Complete Headless CMS Solution
 
-A production-ready headless CMS built with **Payload CMS v3** and **Next.js 15**, featuring advanced content blocks, dynamic pages, and a modern admin interface.
+A production-ready headless CMS built with **Payload CMS v3** and **Next.js 15**, featuring professional article management, advanced content blocks, dynamic pages, and a modern admin interface.
 
 ## ✨ Features
 
@@ -14,7 +14,7 @@ A production-ready headless CMS built with **Payload CMS v3** and **Next.js 15**
 
 ### 🏗️ Content Management
 - **Dynamic Pages** - Create pages with content blocks
-- **Blog Posts** - Rich content with categories and tags
+- **Articles** - Professional blog content with advanced workflow
 - **Services** - Service management with pricing and features
 - **Team Members** - Team profiles and management
 - **Media Library** - File uploads and organization
@@ -155,9 +155,9 @@ Once everything is running:
 
 ### Content Types
 
-- **Pages** - Dynamic website pages with blocks
-- **Posts** - Blog posts with rich content
-- **Services** - Company services with pricing
+- **Pages** - Dynamic website pages with content blocks
+- **Articles** - Professional blog content with status workflow (draft/published/archived)
+- **Services** - Company services with advanced pricing and features
 - **Team** - Team member profiles
 - **Categories** - Content categorization
 - **Tags** - Content tagging
@@ -210,7 +210,7 @@ NEXT_PUBLIC_SITE_DESCRIPTION="Your description"
 
 - **Homepage** (`/`) - Displays featured content
 - **Services** (`/services`) - Lists all services
-- **Blog** (`/blog`) - Shows blog posts
+- **Blog** (`/blog`) - Shows published articles with categories and tags
 - **About** (`/about`) - Company information
 - **Contact** (`/contact`) - Contact form
 - **Dynamic Pages** (`/[slug]`) - CMS-created pages
@@ -342,4 +342,4 @@ Congratulations! You now have a **production-ready headless CMS** that includes:
 ✅ **Docker Support** for easy deployment  
 ✅ **Production Configuration** with monitoring and security  
 
-**Your System CMS is ready to power professional websites, blogs, and business applications!** 🚀
+**Your System CMS is ready to power professional websites, article platforms, and business applications!** 🚀

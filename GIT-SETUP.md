@@ -2,18 +2,18 @@
 
 ## 📁 Repository Structure
 
-This repository contains the complete Medical Center CMS system:
+This repository contains the complete System CMS platform:
 
 ```
 system-cms/                 # Root repository
 ├── .gitignore             # Comprehensive gitignore for all components
 ├── README.md              # Main documentation
-├── payload-backend/       # Payload CMS backend
+├── PROJECT-UNDERSTANDING.md # Complete system overview
+├── cms-admin/             # Payload CMS v3 backend
 ├── nextjs-frontend/       # Next.js 15 frontend with Turbopack
 ├── docker-compose.yml     # Development setup
 ├── docker-compose.prod.yml # Production setup
-├── nginx.conf             # Production nginx config
-└── payload-setup-instructions.md
+└── nginx.conf             # Production nginx config
 ```
 
 ## 🚀 Initial Git Setup
@@ -79,7 +79,7 @@ git status --ignored
 
 # Add specific directories
 git add nextjs-frontend/
-git add payload-backend/
+git add cms-admin/
 
 # Commit with conventional format
 git commit -m "🐛 Fix form validation in contact page"
@@ -99,7 +99,7 @@ The root `.gitignore` automatically excludes:
 - TypeScript build info
 
 ### Sensitive Data
-- Database uploads (`payload-backend/uploads/`)
+- Database uploads (`cms-admin/uploads/`)
 - SSL certificates
 - Private keys and certificates
 - Environment configuration files
