@@ -64,7 +64,8 @@ interface RelatedPost {
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
-    const post = await api.posts.getBySlug(params.slug)
+    const response = await api.posts.getBySlug(params.slug)
+    const post = response.data.docs[0]
     
     if (!post) {
       return {
@@ -105,8 +106,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   try {
-    const posts = await api.posts.getAll({ limit: 100 })
-    return posts.docs?.map((post) => ({
+    const response = await api.posts.getAll({ limit: 100 })
+    return response.data.docs?.map((post) => ({
       slug: post.slug,
     })) || []
   } catch (error) {
@@ -118,14 +119,15 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   try {
     // Fetch the blog post
-    const post = await api.posts.getBySlug(params.slug)
+    const response = await api.posts.getBySlug(params.slug)
+    const post = response.data.docs[0]
     
     if (!post) {
       notFound()
     }
 
     // Fetch related posts (same category or tags)
-    const relatedPosts = await api.posts.getAll({
+    const relatedPostsResponse = await api.posts.getAll({
       limit: 3,
       where: {
         or: [
@@ -138,9 +140,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         ]
       }
     })
+    const relatedPosts = relatedPostsResponse.data
 
     // Calculate read time if not provided
-    const estimatedReadTime = post.readTime || Math.ceil((post.content?.length || 0) / 200)
+    const estimatedReadTime = post.readTime || Math.ceil((JSON.stringify(post.content || {}).length || 0) / 200)
 
     return (
       <div className="min-h-screen bg-background">

@@ -12,7 +12,7 @@ interface RichTextNode {
 }
 
 interface RichTextRendererProps {
-  content: RichTextNode[]
+  content: { root?: { children: RichTextNode[] } } | RichTextNode[]
   className?: string
 }
 
@@ -20,7 +20,16 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
   content, 
   className 
 }) => {
-  if (!content || !Array.isArray(content)) {
+  if (!content) {
+    return null
+  }
+
+  // Handle Lexical editor format (Payload CMS v3)
+  const nodes = Array.isArray(content) 
+    ? content 
+    : content.root?.children || []
+
+  if (!Array.isArray(nodes) || nodes.length === 0) {
     return null
   }
 
@@ -110,8 +119,8 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
       )
     }
 
-    // Paragraph node
-    if (type === 'p') {
+    // Paragraph node (Lexical uses 'paragraph')
+    if (type === 'paragraph' || type === 'p') {
       return (
         <p key={index} className="mb-4 leading-relaxed">
           {children?.map((child, childIndex) => renderNode(child, childIndex))}
@@ -236,7 +245,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
 
   return (
     <div className={cn('rich-text-content', className)}>
-      {content.map((node, index) => renderNode(node, index))}
+      {nodes.map((node, index) => renderNode(node, index))}
     </div>
   )
 }

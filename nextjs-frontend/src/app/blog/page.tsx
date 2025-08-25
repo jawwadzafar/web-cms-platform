@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, Clock, User, Tag, ArrowRight, Search } from 'lucide-react'
+import { Clock, User, ArrowRight, Search } from 'lucide-react'
 import { api } from '@/lib/api-client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -61,8 +61,8 @@ export default async function BlogPage() {
       api.categories.getAll({ limit: 20 })
     ])
 
-    const posts: BlogPost[] = postsResponse.docs || []
-    const categories: Category[] = categoriesResponse.docs || []
+    const posts: BlogPost[] = postsResponse.data.docs || []
+    const categories: Category[] = categoriesResponse.data.docs || []
 
     return (
       <div className="min-h-screen bg-background">
