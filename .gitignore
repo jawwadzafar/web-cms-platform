@@ -1,0 +1,189 @@
+# Medical Center CMS - Root .gitignore
+
+# ===========================
+# Dependencies
+# ===========================
+**/node_modules/
+**/.pnp
+**/.pnp.js
+**/.yarn/install-state.gz
+**/yarn.lock
+**/package-lock.json
+
+# ===========================
+# Environment Files
+# ===========================
+# .env
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+# .env.production
+# **/.env
+# **/.env.local
+# **/.env.development.local
+# **/.env.test.local
+# **/.env.production.local
+
+# ===========================
+# Next.js Frontend
+# ===========================
+nextjs-frontend/.next/
+nextjs-frontend/out/
+nextjs-frontend/build/
+nextjs-frontend/.vercel
+nextjs-frontend/*.tsbuildinfo
+nextjs-frontend/next-env.d.ts
+
+# ===========================
+# Payload Backend
+# ===========================
+payload-backend/dist/
+payload-backend/build/
+payload-backend/uploads/
+payload-backend/*.tsbuildinfo
+payload-backend/generated-schema.graphql
+payload-backend/src/payload-types.ts
+
+# ===========================
+# Database & Storage
+# ===========================
+# MongoDB data (if running locally)
+mongodb-data/
+data/
+# Uploads directory (use Docker volumes in production)
+uploads/
+media/
+
+# ===========================
+# Docker & DevOps
+# ===========================
+# Docker volumes
+docker-volumes/
+# Docker override files
+docker-compose.override.yml
+docker-compose.local.yml
+# SSL certificates (should be managed separately)
+ssl/
+certificates/
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ===========================
+# IDE & Editor Files
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================
+# OS Generated Files
+# ===========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# Testing & Coverage
+# ===========================
+**/coverage/
+**/.nyc_output
+**/junit.xml
+**/.jest-cache/
+
+# ===========================
+# Build Tools & Temporary
+# ===========================
+.tmp/
+temp/
+*.tmp
+*.temp
+
+# ===========================
+# Security & Sensitive Files
+# ===========================
+# Private keys and certificates
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+# Backup files
+*.bak
+*.backup
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# ===========================
+# Development Tools
+# ===========================
+# ESLint cache
+.eslintcache
+# Prettier cache  
+.prettiercache
+# TypeScript cache
+*.tsbuildinfo
+# Turbo cache
+.turbo/
+
+# ===========================
+# Documentation Build
+# ===========================
+# If using documentation generators
+docs/build/
+docs/.docusaurus/
+.docusaurus/
+
+# ===========================
+# Cloud & Deployment
+# ===========================
+.vercel
+.netlify
+# AWS
+.aws/
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# ===========================
+# Package Managers
+# ===========================
+# npm
+npm-debug.log*
+# yarn
+yarn-debug.log*
+yarn-error.log*
+# pnpm
+pnpm-debug.log*
+# Bun
+bun.lockb
+
+# ===========================
+# Local Development
+# ===========================
+# Local configuration overrides
+local.config.*
+# Local scripts
+scripts/local/
+# Development notes
+dev-notes.md
+TODO.local.md

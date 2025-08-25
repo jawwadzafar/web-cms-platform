@@ -1,0 +1,32 @@
+# Medical Center CMS - Commit Message Template
+# 
+# Format: <emoji> <type>: <description>
+#
+# Examples:
+# ✨ feat: Add new patient booking component
+# 🐛 fix: Resolve form validation in contact page  
+# 📦 deps: Update Next.js to 15.5.0 with Turbopack
+# 🔧 config: Configure Tailwind CSS v4 settings
+# 🎨 style: Improve responsive design for mobile
+# 📝 docs: Update README with deployment instructions
+# ♻️ refactor: Simplify user authentication flow
+# 🧪 test: Add unit tests for form validation
+# 🚀 deploy: Configure production Docker setup
+#
+# Emoji Guide:
+# ✨ :sparkles: - New feature
+# 🐛 :bug: - Bug fix  
+# 📦 :package: - Dependencies/packages
+# 🔧 :wrench: - Configuration
+# 🎨 :art: - UI/UX improvements
+# 📝 :memo: - Documentation
+# ♻️ :recycle: - Refactoring
+# 🧪 :test_tube: - Testing
+# 🚀 :rocket: - Deployment
+# 🔒 :lock: - Security
+# ⚡ :zap: - Performance
+# 🗑️ :wastebasket: - Remove code/files
+#
+# Keep the subject line under 50 characters
+# Use present tense ("Add feature" not "Added feature")
+# Include body if needed (wrap at 72 characters)

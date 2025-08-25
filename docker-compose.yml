@@ -1,0 +1,81 @@
+# Development Docker Compose
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: medical-cms-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: payload
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - medical-cms-network
+
+  # Payload CMS Backend
+  payload-backend:
+    build:
+      context: ./payload-backend
+      dockerfile: Dockerfile
+    container_name: medical-cms-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URI=mongodb://admin:password123@mongodb:27017/payload?authSource=admin
+      - PAYLOAD_SECRET=your-secret-here-change-in-production
+      - JWT_SECRET=your-jwt-secret-change-in-production
+      - PORT=3001
+      - PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./payload-backend/src:/app/src
+      - ./payload-backend/uploads:/app/uploads
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - medical-cms-network
+    command: npm run dev
+
+  # Next.js Frontend
+  nextjs-frontend:
+    build:
+      context: ./nextjs-frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3001/api
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+    container_name: medical-cms-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nextjs-frontend/src:/app/src
+      - ./nextjs-frontend/public:/app/public
+      - /app/.next
+      - /app/node_modules
+    depends_on:
+      - payload-backend
+    networks:
+      - medical-cms-network
+    command: npm run dev
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  medical-cms-network:
+    driver: bridge
