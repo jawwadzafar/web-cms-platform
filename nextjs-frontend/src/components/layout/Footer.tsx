@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, Mail, MapPin, Clock } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -35,7 +35,7 @@ export function Footer() {
                 Our Services
               </Link>
               <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Health Blog
+                Our Blog
               </Link>
               <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Contact Us
@@ -98,11 +98,32 @@ export function Footer() {
               © {new Date().getFullYear()} Sanimed International. All rights reserved.
             </p>
             <div className="flex space-x-4">
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
+              <Link 
+                href="https://www.facebook.com/people/Sanimed-International-Lab-and-Management-LLC/61553396977755/?mibextid=LQQJ4d" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-blue-600 transition-colors p-2 hover:bg-blue-50 rounded-full"
+                aria-label="Follow us on Facebook"
+              >
+                <Facebook className="w-5 h-5" />
               </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
+              <Link 
+                href="https://www.instagram.com/sanimedinternational/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-pink-600 transition-colors p-2 hover:bg-pink-50 rounded-full"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </Link>
+              <Link 
+                href="https://www.linkedin.com/company/sanimedgroup/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-blue-700 transition-colors p-2 hover:bg-blue-50 rounded-full"
+                aria-label="Follow us on LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
               </Link>
             </div>
           </div>

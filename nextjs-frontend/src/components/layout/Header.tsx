@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu, X } from 'lucide-react'
 
 export function Header() {
@@ -98,82 +97,99 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className={`lg:hidden ${
-                  isScrolled ? 'text-gray-900' : 'text-white'
-                }`}
-              >
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col space-y-4">
-                <div className="flex items-center justify-between">
-                  <Link href="/" className="flex items-center space-x-2" onClick={() => setMobileMenuOpen(false)}>
-                    <Image 
-                      src="/images/logos/sanimed-logo.png" 
-                      alt="Sanimed International" 
-                      width={140} 
-                      height={32}
-                      className="h-8 w-auto"
-                    />
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <X className="h-6 w-6" />
-                  </Button>
-                </div>
-                
-                <div className="space-y-2">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className={`lg:hidden ${
+              isScrolled ? 'text-gray-900' : 'text-white'
+            }`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">Toggle menu</span>
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden">
+          {/* Full Screen Menu */}
+          <div className="fixed inset-0 bg-white z-50">
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <Link href="/" className="flex items-center space-x-2" onClick={() => setMobileMenuOpen(false)}>
+                  <Image 
+                    src="/images/logos/sanimed-logo.png" 
+                    alt="Sanimed International" 
+                    width={140} 
+                    height={32}
+                    className="h-8 w-auto"
+                  />
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-600 hover:text-gray-900"
+                >
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              {/* Navigation Links - Centered */}
+              <nav className="flex-1 flex items-center justify-center">
+                <div className="text-center space-y-6">
                   <Link
                     href="/"
-                    className="block py-2 text-lg font-medium transition-colors hover:text-primary"
+                    className="block py-4 text-2xl font-semibold text-gray-900 transition-colors hover:text-primary"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Home
                   </Link>
                   <Link
                     href="/services"
-                    className="block py-2 text-lg font-medium transition-colors hover:text-primary"
+                    className="block py-4 text-2xl font-semibold text-gray-900 transition-colors hover:text-primary"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Services
                   </Link>
                   <Link
                     href="/blog"
-                    className="block py-2 text-lg font-medium transition-colors hover:text-primary"
+                    className="block py-4 text-2xl font-semibold text-gray-900 transition-colors hover:text-primary"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Blog
                   </Link>
                   <Link
                     href="/about"
-                    className="block py-2 text-lg font-medium transition-colors hover:text-primary"
+                    className="block py-4 text-2xl font-semibold text-gray-900 transition-colors hover:text-primary"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     About
                   </Link>
                   <Link
                     href="/contact"
-                    className="block py-2 text-lg font-medium transition-colors hover:text-primary"
+                    className="block py-4 text-2xl font-semibold text-gray-900 transition-colors hover:text-primary"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Contact
                   </Link>
                 </div>
               </nav>
-            </SheetContent>
-          </Sheet>
+              
+              {/* Footer */}
+              <div className="p-6 border-t border-gray-200 text-center">
+                <div className="text-sm text-gray-600">
+                  <p className="font-medium text-gray-900 mb-2">Sanimed International</p>
+                  <p>Advanced molecular diagnostics & precision medicine</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   )
 }

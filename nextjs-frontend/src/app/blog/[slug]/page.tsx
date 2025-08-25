@@ -321,7 +321,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </div>
             
             {/* Action Buttons */}
-            <div className="flex items-center justify-center gap-6 mt-10">
+            {/* <div className="flex items-center justify-center gap-6 mt-10">
               <Button variant="ghost" size="lg" className="gap-3 text-white hover:bg-white/10 px-6 py-3">
                 <Bookmark className="h-5 w-5" />
                 Save Article
@@ -330,7 +330,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 <Share2 className="h-5 w-5" />
                 Share
               </Button>
-            </div>
+            </div> */}
           </div>
           
           {/* Scroll indicator */}
