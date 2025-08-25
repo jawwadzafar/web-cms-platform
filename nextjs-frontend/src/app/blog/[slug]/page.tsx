@@ -2,15 +2,12 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calendar, Clock, User, Tag, ArrowLeft, Share2, Bookmark, MessageCircle } from 'lucide-react'
+import { Calendar, Clock, User, ArrowLeft, Share2, Bookmark, MessageCircle } from 'lucide-react'
 import { api } from '@/lib/api-client'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import RichText from '@/components/cms/RichText'
 import { formatDateTime } from '@/lib/utils/formatDateTime'
-import { formatAuthors } from '@/lib/utils/formatAuthors'
 
 interface BlogPost {
   id: string
@@ -79,7 +76,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title: post.meta?.title || post.title,
       description: post.meta?.description || post.excerpt,
-      keywords: post.meta?.keywords || post.tags?.map(t => t.name).join(', '),
+      keywords: post.meta?.keywords || post.tags?.map((t: any) => t.name).join(', '),
       openGraph: {
         title: post.meta?.title || post.title,
         description: post.meta?.description || post.excerpt,
@@ -87,7 +84,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         images: post.meta?.ogImage ? [post.meta.ogImage.url] : post.featuredImage ? [post.featuredImage.url] : [],
         publishedTime: post.publishedDate,
         authors: post.author ? [post.author.name] : [],
-        tags: post.tags?.map(t => t.name) || [],
+        tags: post.tags?.map((t: any) => t.name) || [],
       },
       twitter: {
         card: 'summary_large_image',
@@ -109,7 +106,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export async function generateStaticParams() {
   try {
     const response = await api.posts.getAll({ limit: 100 })
-    return response.data.docs?.map((post) => ({
+    return response.data.docs?.map((post: any) => ({
       slug: post.slug,
     })) || []
   } catch (error) {
@@ -138,7 +135,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           {
             or: [
               { category: { equals: post.category?.id } },
-              { tags: { in: post.tags?.map(t => t.id) || [] } }
+              { tags: { in: post.tags?.map((t: any) => t.id) || [] } }
             ]
           }
         ]
@@ -151,231 +148,243 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
     return (
       <div className="min-h-screen bg-background">
-        {/* Back Navigation */}
-        <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container mx-auto px-4 py-4">
-            <Button variant="ghost" asChild className="gap-2">
-              <Link href="/blog">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Blog
-              </Link>
-            </Button>
+        {/* Hero Section - Full Screen */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black text-white">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 25% 75%, rgba(34, 197, 94, 0.3) 0%, transparent 50%), radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)`
+            }}></div>
           </div>
-        </div>
-
-        <article className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              {/* Article Header */}
-              <header className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  {post.category && (
-                    <Badge variant="outline">
-                      {post.category.name}
-                    </Badge>
+          
+          {/* Featured Image Background */}
+          {post.featuredImage && (
+            <div className="absolute inset-0">
+              <Image
+                src={post.featuredImage.url}
+                alt={post.featuredImage.alt || post.title}
+                fill
+                className="object-cover opacity-40"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80"></div>
+            </div>
+          )}
+          
+          {/* Content Overlay */}
+          <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+            {/* Back Navigation */}
+            <div className="absolute top-8 left-0">
+              <Button variant="ghost" asChild className="gap-2 text-white hover:bg-white/10">
+                <Link href="/blog">
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Blog
+                </Link>
+              </Button>
+            </div>
+            
+            {/* Category and Date */}
+            <div className="flex items-center justify-center gap-3 mb-6">
+              {post.category && (
+                <Badge variant="outline" className="bg-white/10 border-white/20 text-white">
+                  {post.category.name}
+                </Badge>
+              )}
+              <span className="text-white/80 text-sm">
+                {formatDateTime(post.publishedDate)}
+              </span>
+            </div>
+            
+            {/* Title */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
+              {post.title}
+            </h1>
+            
+            {/* Excerpt */}
+            <p className="text-xl md:text-2xl font-light text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+              {post.excerpt}
+            </p>
+            
+            {/* Author and Meta */}
+            <div className="flex items-center justify-center gap-6 text-white/80">
+              {post.author && (
+                <div className="flex items-center gap-3">
+                  {post.author.avatar && (
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/20">
+                      <Image
+                        src={post.author.avatar.url}
+                        alt={post.author.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   )}
-                  <span className="text-sm text-muted-foreground">
-                    {formatDateTime(post.publishedDate)}
-                  </span>
-                </div>
-
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-                  {post.title}
-                </h1>
-
-                <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                  {post.excerpt}
-                </p>
-
-                {/* Author and Meta Info */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    {post.author && (
-                      <div className="flex items-center gap-3">
-                        {post.author.avatar && (
-                          <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                            <Image
-                              src={post.author.avatar.url}
-                              alt={post.author.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
-                        <div>
-                          <p className="font-medium">{post.author.name}</p>
-                          {post.author.bio && (
-                            <p className="text-sm text-muted-foreground">{post.author.bio}</p>
-                          )}
-                        </div>
-                      </div>
+                  <div className="text-left">
+                    <p className="font-medium text-white">{post.author.name}</p>
+                    {post.author.bio && (
+                      <p className="text-sm text-white/70">{post.author.bio}</p>
                     )}
                   </div>
-
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" className="gap-2">
-                      <Bookmark className="h-4 w-4" />
-                      Save
-                    </Button>
-                    <Button variant="ghost" size="sm" className="gap-2">
-                      <Share2 className="h-4 w-4" />
-                      Share
-                    </Button>
-                  </div>
-                </div>
-              </header>
-
-              {/* Featured Image */}
-              {post.featuredImage && (
-                <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden mb-8">
-                  <Image
-                    src={post.featuredImage.url}
-                    alt={post.featuredImage.alt || post.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
                 </div>
               )}
+              
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{estimatedReadTime} min read</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>{formatDateTime(post.publishedDate)}</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <Button variant="ghost" size="lg" className="gap-2 text-white hover:bg-white/10">
+                <Bookmark className="h-5 w-5" />
+                Save
+              </Button>
+              <Button variant="ghost" size="lg" className="gap-2 text-white hover:bg-white/10">
+                <Share2 className="h-5 w-5" />
+                Share
+              </Button>
+            </div>
+          </div>
+          
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
+            </div>
+          </div>
+        </section>
 
-              {/* Article Content */}
-              <div className="mb-12">
-                {/* Render the rich text content from Payload CMS */}
-                {post.content ? (
-                  <RichText data={post.content} />
-                ) : (
-                  <div className="text-center py-12">
-                    <p className="text-muted-foreground">Content is being prepared...</p>
+        {/* Article Content Section */}
+        <section className="py-32 bg-white">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+              {/* Main Content */}
+              <main className="lg:col-span-3">
+                {/* Article Content */}
+                <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:text-gray-800 prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200">
+                  {post.content ? (
+                    <RichText data={post.content} />
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">Content is being prepared...</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="mt-12 pt-8 border-t border-gray-200">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Tags</h3>
+                    <div className="flex flex-wrap gap-3">
+                      {post.tags.map((tag: any) => (
+                        <Badge key={tag.id} variant="outline" asChild className="bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100">
+                          <Link href={`/blog/tag/${tag.slug}`}>
+                            {tag.name}
+                          </Link>
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 )}
-              </div>
 
-              {/* Tags */}
-              {post.tags && post.tags.length > 0 && (
-                <div className="mb-8">
-                  <h3 className="text-lg font-semibold mb-3">Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <Badge key={tag.id} variant="secondary" asChild>
-                        <Link href={`/blog/tag/${tag.slug}`}>
-                          {tag.name}
-                        </Link>
-                      </Badge>
-                    ))}
+                {/* Article Footer */}
+                <footer className="mt-12 pt-8 border-t border-gray-200">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4">
+                      <span>Published {formatDateTime(post.publishedDate)}</span>
+                      <span>•</span>
+                      <span>{estimatedReadTime} min read</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <Button variant="ghost" size="sm" className="gap-2">
+                        <MessageCircle className="h-4 w-4" />
+                        Comment
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              )}
+                </footer>
+              </main>
 
-              {/* Article Footer */}
-              <footer className="border-t pt-8">
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center gap-4">
-                    <span>Published {formatDateTime(post.publishedDate)}</span>
-                    <span>•</span>
-                    <span>{estimatedReadTime} min read</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <Button variant="ghost" size="sm" className="gap-2">
-                      <MessageCircle className="h-4 w-4" />
-                      Comment
-                    </Button>
-                  </div>
-                </div>
-              </footer>
-            </div>
-
-            {/* Sidebar */}
-            <aside className="lg:col-span-1 space-y-8">
-              {/* Author Card */}
-              {post.author && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">About the Author</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-3 mb-3">
-                      {post.author.avatar && (
-                        <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                          <Image
-                            src={post.author.avatar.url}
-                            alt={post.author.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-                      <div>
-                        <h4 className="font-semibold">{post.author.name}</h4>
-                        {post.author.bio && (
-                          <p className="text-sm text-muted-foreground">{post.author.bio}</p>
-                        )}
+              {/* Sidebar */}
+              <aside className="lg:col-span-1 space-y-8">
+                {/* Related Posts */}
+                {relatedPosts.docs && relatedPosts.docs.length > 0 && (
+                  <div className="group relative">
+                    {/* 3D Border Effect */}
+                    <div className="absolute -inset-2 bg-gradient-to-br from-blue-500 to-indigo-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 to-indigo-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
+                    
+                    {/* Main Container */}
+                    <div className="relative bg-white rounded-2xl shadow-xl p-6">
+                      <h3 className="text-lg font-semibold mb-4 text-gray-900">Related Posts</h3>
+                      <div className="space-y-4">
+                        {relatedPosts.docs.map((relatedPost: RelatedPost) => (
+                          <div key={relatedPost.id} className="group">
+                            <Link href={`/blog/${relatedPost.slug}`} className="block">
+                              <div className="flex gap-3">
+                                {relatedPost.featuredImage && (
+                                  <div className="relative w-20 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                                    <Image
+                                      src={relatedPost.featuredImage.url}
+                                      alt={relatedPost.featuredImage.alt || relatedPost.title}
+                                      fill
+                                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-medium text-sm line-clamp-2 group-hover:text-blue-600 transition-colors">
+                                    {relatedPost.title}
+                                  </h4>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {formatDateTime(relatedPost.publishedDate)}
+                                  </p>
+                                </div>
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+                  </div>
+                )}
 
-              {/* Related Posts */}
-              {relatedPosts.docs && relatedPosts.docs.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Related Posts</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {relatedPosts.docs.map((relatedPost: RelatedPost) => (
-                      <div key={relatedPost.id} className="group">
-                        <Link href={`/blog/${relatedPost.slug}`} className="block">
-                          <div className="flex gap-3">
-                            {relatedPost.featuredImage && (
-                              <div className="relative w-20 h-16 rounded overflow-hidden flex-shrink-0">
-                                <Image
-                                  src={relatedPost.featuredImage.url}
-                                  alt={relatedPost.featuredImage.alt || relatedPost.title}
-                                  fill
-                                  className="object-cover group-hover:scale-105 transition-transform"
-                                />
-                              </div>
-                            )}
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
-                                {relatedPost.title}
-                              </h4>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                {formatDateTime(relatedPost.publishedDate)}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Newsletter Signup */}
-              <Card className="bg-primary/5 border-primary/20">
-                <CardHeader>
-                  <CardTitle className="text-lg">Stay Updated</CardTitle>
-                  <CardDescription>
-                    Get the latest articles and insights delivered to your inbox.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full px-3 py-2 text-sm border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <Button size="sm" className="w-full">
-                    Subscribe
-                  </Button>
-                </CardContent>
-              </Card>
-            </aside>
+                {/* Newsletter Signup */}
+                <div className="group relative">
+                  {/* 3D Border Effect */}
+                  <div className="absolute -inset-2 bg-gradient-to-br from-green-500 to-emerald-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+                  <div className="absolute -inset-1 bg-gradient-to-br from-green-600 to-emerald-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
+                  
+                  {/* Main Container */}
+                  <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-xl p-6 border border-green-200">
+                    <h3 className="text-lg font-semibold mb-3 text-green-900">Stay Updated</h3>
+                    <p className="text-sm text-green-700 mb-4">
+                      Get the latest articles and insights delivered to your inbox.
+                    </p>
+                    <div className="space-y-3">
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="w-full px-3 py-2 text-sm border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
+                      />
+                      <Button size="sm" className="w-full bg-green-600 hover:bg-green-700">
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
-        </article>
+        </section>
       </div>
     )
   } catch (error) {
