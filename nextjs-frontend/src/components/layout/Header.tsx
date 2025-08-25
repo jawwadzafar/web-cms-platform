@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu'
 import { Menu, X, Phone, Mail } from 'lucide-react'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -52,8 +53,11 @@ export function Header() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Contact Info & CTA */}
+          {/* Right side: Theme Toggle, Contact Info & CTA */}
           <div className="hidden lg:flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-1">
                 <Phone className="w-4 h-4" />
@@ -94,6 +98,10 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="border-t pt-4 mt-4">
+                  {/* Theme Toggle in Mobile Menu */}
+                  <div className="flex justify-center mb-4">
+                    <ThemeToggle />
+                  </div>
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-center space-x-2">
                       <Phone className="w-4 h-4" />
