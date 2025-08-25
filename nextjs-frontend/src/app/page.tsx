@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ModernButton, AnimatedBackground } from '@/components/custom'
+import { ModernButton, SplineBackground } from '@/components/custom'
 import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, Users, Globe } from 'lucide-react'
 import { api } from '@/lib/api-client'
 
@@ -56,24 +56,45 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center bg-black overflow-hidden">
         <div className="absolute inset-0">
-          {/* Animated Background */}
-          <AnimatedBackground className="absolute inset-0" />
+          {/* Spline 3D DNA/Molecular Animation 
+              TODO: Create custom Spline scene with:
+              - DNA double helix rotating slowly
+              - Molecular structures (protein, ATP, etc.)
+              - Laboratory equipment (microscopes, test tubes)
+              - Blue/Purple medical theme colors
+              - Subtle particle effects
+              Scene URL can be updated once custom scene is created
+          */}
+          <SplineBackground 
+            // scene="https://prod.spline.design/Ur7JF-0vA8RCBJ7P/scene.splinecode"
+            scene="/assets/scenemain.spline"
+            className="absolute inset-0"
+            opacity={0.6}
+          />
           
-          {/* Hero Image */}
+          {/* Fallback Hero Image */}
           <Image
             src="/images/hero/homepage-hero.jpg"
             alt="Advanced Medical Research"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-15"
             priority
           />
           
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/75" />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/70" />
+          
+          {/* Additional particle effects */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/40 rounded-full animate-ping"></div>
+            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-purple-400/40 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-indigo-400/40 rounded-full animate-bounce" style={{animationDelay: '2s'}}></div>
+            <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-cyan-400/40 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+          </div>
         </div>
         
         <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
-          <div className="mb-12">
+          {/* <div className="mb-12">
             <Image 
               src="/images/logos/sanimed-logo-white.png" 
               alt="Sanimed International" 
@@ -81,7 +102,7 @@ export default async function HomePage() {
               height={90}
               className="h-20 w-auto mx-auto mb-8"
             />
-          </div>
+          </div> */}
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-light mb-8 tracking-tight leading-none">
             Solutions For A<br />
