@@ -358,9 +358,153 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:text-gray-800 prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-h1:text-4xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-16 prose-h2:text-3xl prose-h2:font-semibold prose-h2:mb-6 prose-h2:mt-12 prose-h3:text-2xl prose-h3:font-semibold prose-h2:mb-4 prose-h3:mt-10 prose-p:text-lg prose-p:leading-relaxed prose-p:mb-8 prose-p:mt-6 prose-ul:mb-8 prose-ol:mb-8 prose-li:mb-3 prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-8 prose-blockquote:italic prose-blockquote:text-gray-700 prose-blockquote:bg-blue-50 prose-blockquote:py-6 prose-blockquote:rounded-r-lg prose-blockquote:my-8 prose-hr:my-12 prose-hr:border-gray-200 prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8">
                 {post.content ? (
                   <>
+                    {/* Primary: RichText Component */}
+                    <div className="rich-text-primary mb-8">
+                      <RichText data={post.content} />
+                    </div>
+                    
+                    {/* Backup: Enhanced Manual Renderer with Image Support */}
+                    <div className="content-renderer-backup opacity-50">
+                      <div className="text-center mb-4 p-2 bg-blue-50 border border-blue-200 rounded text-xs text-blue-700">
+                        Backup renderer active - RichText component may not be working properly
+                      </div>
+                      {post.content?.root?.children?.map((node: any, index: number) => {
+                        // Paragraphs
+                        if (node.type === 'paragraph') {
+                          return (
+                            <p key={index} className="mb-6 text-lg leading-relaxed text-gray-700">
+                              {node.children?.map((child: any, childIndex: number) => {
+                                if (child.type === 'text') {
+                                  return <span key={childIndex}>{child.text}</span>
+                                }
+                                // Handle bold text
+                                if (child.type === 'text' && child.format === 1) {
+                                  return <strong key={childIndex}>{child.text}</strong>
+                                }
+                                // Handle italic text
+                                if (child.type === 'text' && child.format === 2) {
+                                  return <em key={childIndex}>{child.text}</em>
+                                }
+                                return null
+                              })}
+                            </p>
+                          )
+                        }
+                        
+                        // Headings
+                        if (node.type === 'heading') {
+                          const level = node.tag || 'h2'
+                          if (level === 'h1') {
+                            return (
+                              <h1 key={index} className="text-4xl font-bold mb-8 mt-16 text-gray-900">
+                                {node.children?.map((child: any, childIndex: number) => {
+                                  if (child.type === 'text') {
+                                    return <span key={childIndex}>{child.text}</span>
+                                  }
+                                  return null
+                                })}
+                              </h1>
+                            )
+                          }
+                          if (level === 'h2') {
+                            return (
+                              <h2 key={index} className="text-3xl font-semibold mb-6 mt-12 text-gray-900">
+                                {node.children?.map((child: any, childIndex: number) => {
+                                  if (child.type === 'text') {
+                                    return <span key={childIndex}>{child.text}</span>
+                                  }
+                                  return null
+                                })}
+                              </h2>
+                            )
+                          }
+                          if (level === 'h3') {
+                            return (
+                              <h3 key={index} className="text-2xl font-semibold mb-4 mt-10 text-gray-900">
+                                {node.children?.map((child: any, childIndex: number) => {
+                                  if (child.type === 'text') {
+                                    return <span key={childIndex}>{child.text}</span>
+                                  }
+                                  return null
+                                })}
+                              </h3>
+                            )
+                          }
+                        }
+                        
+                        // Lists
+                        if (node.type === 'list') {
+                          const ListTag = node.listType === 'number' ? 'ol' : 'ul'
+                          return (
+                            <ListTag key={index} className="mb-6 ml-6">
+                              {node.children?.map((listItem: any, listIndex: number) => (
+                                <li key={listIndex} className="mb-2 text-lg text-gray-700">
+                                  {listItem.children?.map((child: any, childIndex: number) => {
+                                    if (child.type === 'text') {
+                                      return <span key={childIndex}>{child.text}</span>
+                                    }
+                                    return null
+                                  })}
+                                </li>
+                              ))}
+                            </ListTag>
+                          )
+                        }
+                        
+                        // Images - Handle both direct image nodes and upload nodes
+                        if (node.type === 'image' || node.type === 'upload') {
+                          let imageData = node
+                          
+                          // If it's an upload node, extract image data from value
+                          if (node.type === 'upload' && node.value) {
+                            imageData = node.value
+                          }
+                          
+                          // Extract image properties
+                          const imageUrl = imageData.url || imageData.src
+                          const imageAlt = imageData.alt || imageData.altText || 'Blog image'
+                          const imageWidth = imageData.width || 800
+                          const imageHeight = imageData.height || 600
+                          
+                          if (imageUrl) {
+                            return (
+                              <div key={index} className="my-8 text-center">
+                                <Image
+                                  src={imageUrl}
+                                  alt={imageAlt}
+                                  width={imageWidth}
+                                  height={imageHeight}
+                                  className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
+                                />
+                                {imageData.caption && (
+                                  <p className="mt-3 text-sm text-gray-600 italic">{imageData.caption}</p>
+                                )}
+                              </div>
+                            )
+                          }
+                        }
+                        
+                        // Blockquotes
+                        if (node.type === 'quote') {
+                          return (
+                            <blockquote key={index} className="my-8 pl-8 border-l-4 border-blue-500 italic text-lg text-gray-700 bg-blue-50 py-4 rounded-r-lg">
+                              {node.children?.map((child: any, childIndex: number) => {
+                                if (child.type === 'text') {
+                                  return <span key={childIndex}>{child.text}</span>
+                                }
+                                return null
+                              })}
+                            </blockquote>
+                          )
+                        }
+                        
+                        return null
+                      })}
+                    </div>
+                    
                     {/* Debug: Show content structure */}
                     {process.env.NODE_ENV === 'development' && (
-                      <div className="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                      <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <h4 className="text-sm font-semibold text-yellow-800 mb-2">Debug Info (Development Only)</h4>
                         <p className="text-xs text-yellow-700 mb-2">Content Type: {typeof post.content}</p>
                         <p className="text-xs text-yellow-700 mb-2">Content Keys: {post.content ? Object.keys(post.content).join(', ') : 'None'}</p>
@@ -370,71 +514,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                             {JSON.stringify(post.content, null, 2)}
                           </pre>
                         </details>
-                      </div>
-                    )}
-                    
-                    <RichText data={post.content} />
-                    
-                    {/* Fallback: If RichText doesn't work, show raw content */}
-                    {process.env.NODE_ENV === 'development' && (
-                      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <h4 className="text-sm font-semibold text-blue-800 mb-2">Fallback Content Renderer</h4>
-                        <div className="text-sm text-blue-700">
-                          {post.content?.root?.children?.map((node: any, index: number) => {
-                            if (node.type === 'paragraph') {
-                              return (
-                                <p key={index} className="mb-4">
-                                  {node.children?.map((child: any, childIndex: number) => {
-                                    if (child.type === 'text') {
-                                      return <span key={childIndex}>{child.text}</span>
-                                    }
-                                    return null
-                                  })}
-                                </p>
-                              )
-                            }
-                            if (node.type === 'heading') {
-                              const level = node.tag || 'h2'
-                              if (level === 'h1') {
-                                return (
-                                  <h1 key={index} className="text-3xl font-bold mb-4 mt-8">
-                                    {node.children?.map((child: any, childIndex: number) => {
-                                      if (child.type === 'text') {
-                                        return <span key={childIndex}>{child.text}</span>
-                                      }
-                                      return null
-                                    })}
-                                  </h1>
-                                )
-                              }
-                              if (level === 'h2') {
-                                return (
-                                  <h2 key={index} className="text-2xl font-bold mb-4 mt-8">
-                                    {node.children?.map((child: any, childIndex: number) => {
-                                      if (child.type === 'text') {
-                                        return <span key={childIndex}>{child.text}</span>
-                                      }
-                                      return null
-                                    })}
-                                  </h2>
-                                )
-                              }
-                              if (level === 'h3') {
-                                return (
-                                  <h3 key={index} className="text-xl font-bold mb-4 mt-8">
-                                    {node.children?.map((child: any, childIndex: number) => {
-                                      if (child.type === 'text') {
-                                        return <span key={childIndex}>{child.text}</span>
-                                      }
-                                      return null
-                                    })}
-                                  </h3>
-                                )
-                              }
-                            }
-                            return null
-                          })}
-                        </div>
                       </div>
                     )}
                   </>
