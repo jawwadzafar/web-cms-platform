@@ -66,7 +66,7 @@ interface RelatedPost {
 // Generate metadata for the blog post
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
-    const response = await api.articles.getBySlug(params.slug)
+    const response = await api.posts.getBySlug(params.slug)
     const post = response.data.docs[0]
     
     if (!post) {
@@ -108,7 +108,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   try {
-    const response = await api.articles.getAll({ limit: 100 })
+    const response = await api.posts.getAll({ limit: 100 })
     return response.data.docs?.map((post) => ({
       slug: post.slug,
     })) || []
@@ -121,7 +121,7 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   try {
     // Fetch the blog post
-    const response = await api.articles.getBySlug(params.slug)
+    const response = await api.posts.getBySlug(params.slug)
     const post = response.data.docs[0]
     
     if (!post) {
@@ -129,7 +129,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     }
 
     // Fetch related posts (same category or tags)
-    const relatedPostsResponse = await api.articles.getAll({
+    const relatedPostsResponse = await api.posts.getAll({
       limit: 3,
       where: {
         and: [

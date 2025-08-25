@@ -79,7 +79,7 @@ export default async function TagPage({ params }: { params: { slug: string } }) 
     // Fetch tag and posts
     const [tagResponse, postsResponse] = await Promise.all([
       api.tags.getBySlug(params.slug),
-      api.articles.getAll({
+      api.posts.getAll({
         where: {
           tags: { slug: { equals: params.slug } },
           status: { equals: 'published' }

@@ -2,16 +2,16 @@ import { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { slugField } from '@/payload/fields/slug'
 
-// Rename Posts to Articles for more professional branding
-export const Articles: CollectionConfig = {
-  slug: 'articles',
+// WordPress-style Posts for familiar blog management
+export const Posts: CollectionConfig = {
+  slug: 'posts',
   labels: {
-    singular: 'Article',
-    plural: 'Articles',
+    singular: 'Post',
+    plural: 'Posts',
   },
   admin: {
     useAsTitle: 'title',
-    description: 'Create and manage blog articles, news, and content pieces.',
+    description: 'Manage blog posts, company news, and medical industry updates.',
     defaultColumns: ['title', 'slug', 'status', 'publishedDate', 'author', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
@@ -71,7 +71,7 @@ export const Articles: CollectionConfig = {
     {
       name: 'author',
       type: 'relationship',
-      relationTo: 'team',
+      relationTo: 'users',
       hasMany: false,
     },
     {

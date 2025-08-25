@@ -5,6 +5,8 @@ export const Categories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'active', 'updatedAt'],
+    description: 'Organize blog posts into medical and healthcare categories',
+    group: 'Blog Management',
   },
   access: {
     read: () => true, // Public read access
@@ -28,7 +30,23 @@ export const Categories: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       admin: {
-        description: 'Brief description of this category',
+        description: 'Brief description of this medical/healthcare category for SEO and display purposes',
+      },
+    },
+    {
+      name: 'color',
+      type: 'select',
+      options: [
+        { label: 'Blue (Molecular Diagnostics)', value: 'blue' },
+        { label: 'Green (Genetics)', value: 'green' },
+        { label: 'Purple (Clinical)', value: 'purple' },
+        { label: 'Orange (Research)', value: 'orange' },
+        { label: 'Red (Industry News)', value: 'red' },
+        { label: 'Gray (General)', value: 'gray' },
+      ],
+      defaultValue: 'blue',
+      admin: {
+        description: 'Color theme for category display',
       },
     },
     {

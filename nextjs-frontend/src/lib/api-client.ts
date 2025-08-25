@@ -39,27 +39,19 @@ apiClient.interceptors.response.use(
 
 // API endpoints for Payload CMS v3
 export const api = {
-  // Articles (formerly Posts)
-  articles: {
+  // Posts (WordPress-style)
+  posts: {
     getAll: (params?: { limit?: number; page?: number; sort?: string; where?: any }) =>
-      apiClient.get('/api/articles', { params }),
-    getBySlug: (slug: string) => apiClient.get(`/api/articles?where[slug][equals]=${slug}`),
-    getFeatured: () => apiClient.get('/api/articles?where[featured][equals]=true'),
+      apiClient.get('/api/posts', { params }),
+    getBySlug: (slug: string) => apiClient.get(`/api/posts?where[slug][equals]=${slug}`),
+    getFeatured: () => apiClient.get('/api/posts?where[featured][equals]=true'),
     getPublished: (params?: { limit?: number; page?: number; sort?: string }) =>
-      apiClient.get('/api/articles', { 
+      apiClient.get('/api/posts', { 
         params: { 
           ...params, 
           where: { status: { equals: 'published' } }
         } 
       }),
-  },
-  
-  // Backward compatibility alias
-  posts: {
-    getAll: (params?: { limit?: number; page?: number; sort?: string; where?: any }) =>
-      apiClient.get('/api/articles', { params }),
-    getBySlug: (slug: string) => apiClient.get(`/api/articles?where[slug][equals]=${slug}`),
-    getFeatured: () => apiClient.get('/api/articles?where[featured][equals]=true'),
   },
 
   // Pages

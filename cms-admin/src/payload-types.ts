@@ -69,15 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    pages: Page;
-    articles: Article;
-    services: Service;
-    team: Team;
+    posts: Post;
     categories: Category;
     tags: Tag;
-    locations: Location;
-    contact: Contact;
-    newsletter: Newsletter;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -86,15 +80,9 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
-    articles: ArticlesSelect<false> | ArticlesSelect<true>;
-    services: ServicesSelect<false> | ServicesSelect<true>;
-    team: TeamSelect<false> | TeamSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
-    locations: LocationsSelect<false> | LocationsSelect<true>;
-    contact: ContactSelect<false> | ContactSelect<true>;
-    newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -181,191 +169,12 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: string;
-  title: string;
-  /**
-   * Brief description for meta tags and previews
-   */
-  excerpt?: string | null;
-  featuredImage?: (string | null) | Media;
-  /**
-   * Build your page using content blocks
-   */
-  blocks?: (HighImpactHeroBlock | CallToActionBlock | ContentBlock | MediaBlock)[] | null;
-  published?: boolean | null;
-  publishedAt?: string | null;
-  /**
-   * Display this page in the main navigation menu
-   */
-  showInNavigation?: boolean | null;
-  /**
-   * Navigation order (lower numbers appear first)
-   */
-  order?: number | null;
-  /**
-   * SEO settings
-   */
-  meta?: {
-    /**
-     * SEO title (leave empty to use page title)
-     */
-    title?: string | null;
-    /**
-     * SEO meta description
-     */
-    description?: string | null;
-    /**
-     * Comma-separated keywords for SEO
-     */
-    keywords?: string | null;
-    /**
-     * Open Graph image for social sharing
-     */
-    ogImage?: (string | null) | Media;
-  };
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HighImpactHeroBlock".
- */
-export interface HighImpactHeroBlock {
-  /**
-   * Main headline for the hero section
-   */
-  title: string;
-  /**
-   * Optional subtitle above the main title
-   */
-  subtitle?: string | null;
-  /**
-   * Brief description below the title
-   */
-  description?: string | null;
-  /**
-   * Background image for the hero section
-   */
-  media: string | Media;
-  /**
-   * Call-to-action buttons
-   */
-  links?:
-    | {
-        label: string;
-        /**
-         * URL for the button (e.g., /contact, /services)
-         */
-        url: string;
-        variant?: ('default' | 'outline') | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'highImpactHero';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  /**
-   * Main headline for the call-to-action section
-   */
-  title: string;
-  /**
-   * Description text below the title
-   */
-  description?: string | null;
-  /**
-   * Action buttons
-   */
-  links?:
-    | {
-        label: string;
-        /**
-         * URL for the button
-         */
-        url: string;
-        variant?: ('default' | 'outline') | null;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToAction';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock".
- */
-export interface ContentBlock {
-  /**
-   * Optional title for the content section
-   */
-  title?: string | null;
-  /**
-   * Main content for this section
-   */
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Text alignment for the content
-   */
-  layout?: ('left' | 'center' | 'right') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'content';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  /**
-   * Image or media file to display
-   */
-  media: string | Media;
-  /**
-   * Optional caption below the media
-   */
-  caption?: string | null;
-  /**
-   * Layout style for the media
-   */
-  layout?: ('full' | 'contained' | 'left' | 'right') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * Create and manage blog articles, news, and content pieces.
+ * Manage blog posts, company news, and medical industry updates.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles".
+ * via the `definition` "posts".
  */
-export interface Article {
+export interface Post {
   id: string;
   title: string;
   /**
@@ -390,7 +199,7 @@ export interface Article {
   };
   category: string | Category;
   tags?: (string | Tag)[] | null;
-  author?: (string | null) | Team;
+  author?: (string | null) | User;
   /**
    * When this article should be published
    */
@@ -435,6 +244,8 @@ export interface Article {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Organize blog posts into medical and healthcare categories
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
@@ -446,9 +257,13 @@ export interface Category {
    */
   slug: string;
   /**
-   * Brief description of this category
+   * Brief description of this medical/healthcare category for SEO and display purposes
    */
   description?: string | null;
+  /**
+   * Color theme for category display
+   */
+  color?: ('blue' | 'green' | 'purple' | 'orange' | 'red' | 'gray') | null;
   /**
    * Display this category on the website
    */
@@ -461,6 +276,8 @@ export interface Category {
   createdAt: string;
 }
 /**
+ * Tag blog posts with medical terminology, conditions, and healthcare topics
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tags".
  */
@@ -472,350 +289,17 @@ export interface Tag {
    */
   slug: string;
   /**
-   * Brief description of this tag
+   * Brief description of this medical/healthcare tag for SEO purposes
    */
   description?: string | null;
+  /**
+   * Categorize the type of medical topic this tag represents
+   */
+  type?: ('condition' | 'treatment' | 'diagnostic' | 'research' | 'technology' | 'news' | 'general') | null;
   /**
    * Display this tag on the website
    */
   active?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team".
- */
-export interface Team {
-  id: string;
-  name: string;
-  position: string;
-  bio: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Brief bio for team cards and previews
-   */
-  shortBio?: string | null;
-  photo: string | Media;
-  email?: string | null;
-  phone?: string | null;
-  social?: {
-    /**
-     * LinkedIn profile URL
-     */
-    linkedin?: string | null;
-    /**
-     * Twitter/X profile URL
-     */
-    twitter?: string | null;
-    /**
-     * Personal website URL
-     */
-    website?: string | null;
-  };
-  /**
-   * Display this team member on the website
-   */
-  active?: boolean | null;
-  /**
-   * Display this team member prominently
-   */
-  featured?: boolean | null;
-  /**
-   * Display order (lower numbers appear first)
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Manage your company services, pricing, and offerings.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: string;
-  title: string;
-  /**
-   * Brief description for service cards and previews
-   */
-  shortDescription: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  featuredImage?: (string | null) | Media;
-  /**
-   * Additional images for this service
-   */
-  gallery?:
-    | {
-        image: string | Media;
-        /**
-         * Optional caption for the image
-         */
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  category?: (string | null) | Category;
-  /**
-   * Pricing information
-   */
-  pricing?: {
-    /**
-     * Starting price in dollars
-     */
-    startingPrice?: number | null;
-    /**
-     * e.g., "$100 - $500" or "Starting at $200"
-     */
-    priceRange?: string | null;
-    /**
-     * Additional pricing information
-     */
-    pricingDetails?: string | null;
-    currency?: ('USD' | 'EUR' | 'GBP') | null;
-  };
-  /**
-   * Key features of this service
-   */
-  features?:
-    | {
-        feature: string;
-        /**
-         * Brief description of this feature
-         */
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Display this service on the website
-   */
-  active?: boolean | null;
-  /**
-   * Display this service prominently on the homepage
-   */
-  featured?: boolean | null;
-  /**
-   * Display order (lower numbers appear first)
-   */
-  order?: number | null;
-  /**
-   * SEO settings
-   */
-  meta?: {
-    /**
-     * SEO title (leave empty to use service title)
-     */
-    title?: string | null;
-    /**
-     * SEO meta description (leave empty to use short description)
-     */
-    description?: string | null;
-    /**
-     * Comma-separated keywords for SEO
-     */
-    keywords?: string | null;
-    /**
-     * Open Graph image for social sharing
-     */
-    ogImage?: (string | null) | Media;
-  };
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations".
- */
-export interface Location {
-  id: string;
-  /**
-   * Location name (e.g., "Main Office", "Downtown Branch")
-   */
-  name: string;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country?: string | null;
-  };
-  coordinates?: {
-    /**
-     * GPS latitude coordinate
-     */
-    latitude?: number | null;
-    /**
-     * GPS longitude coordinate
-     */
-    longitude?: number | null;
-  };
-  contact?: {
-    phone?: string | null;
-    email?: string | null;
-  };
-  hours?: {
-    /**
-     * e.g., "9:00 AM - 5:00 PM" or "Closed"
-     */
-    monday?: string | null;
-    tuesday?: string | null;
-    wednesday?: string | null;
-    thursday?: string | null;
-    friday?: string | null;
-    saturday?: string | null;
-    sunday?: string | null;
-  };
-  /**
-   * Display this location on the website
-   */
-  active?: boolean | null;
-  /**
-   * Mark as primary/headquarters location
-   */
-  primary?: boolean | null;
-  /**
-   * Display order (lower numbers appear first)
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact".
- */
-export interface Contact {
-  id: string;
-  /**
-   * Contact person name
-   */
-  name: string;
-  /**
-   * Contact email address
-   */
-  email: string;
-  /**
-   * Contact phone number (optional)
-   */
-  phone?: string | null;
-  /**
-   * Subject of the inquiry
-   */
-  subject: string;
-  /**
-   * Contact message content
-   */
-  message: string;
-  /**
-   * Current status of this contact request
-   */
-  status: 'new' | 'in-progress' | 'responded' | 'closed' | 'spam';
-  /**
-   * Priority level of this request
-   */
-  priority?: ('low' | 'normal' | 'high' | 'urgent') | null;
-  /**
-   * Team member assigned to handle this request
-   */
-  assignedTo?: (string | null) | User;
-  /**
-   * Internal notes about this contact request
-   */
-  notes?: string | null;
-  /**
-   * Response sent to the contact person
-   */
-  response?: string | null;
-  /**
-   * When the response was sent
-   */
-  respondedAt?: string | null;
-  /**
-   * How this contact request originated
-   */
-  source?: ('website' | 'phone' | 'email' | 'social' | 'other') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletter".
- */
-export interface Newsletter {
-  id: string;
-  /**
-   * Subscriber email address
-   */
-  email: string;
-  /**
-   * Subscriber first name (optional)
-   */
-  firstName?: string | null;
-  /**
-   * Subscriber last name (optional)
-   */
-  lastName?: string | null;
-  /**
-   * Current subscription status
-   */
-  status: 'subscribed' | 'unsubscribed' | 'pending' | 'bounced' | 'spam';
-  /**
-   * How this subscriber signed up
-   */
-  source?: ('website' | 'footer' | 'blog' | 'landing' | 'import' | 'other') | null;
-  /**
-   * Topics of interest to this subscriber
-   */
-  interests?:
-    | {
-        interest?: ('technology' | 'business' | 'marketing' | 'design' | 'development' | 'news' | 'tips') | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * When the subscriber unsubscribed
-   */
-  unsubscribedAt?: string | null;
-  /**
-   * Reason for unsubscribing
-   */
-  unsubscribeReason?: ('too-many' | 'not-relevant' | 'not-interested' | 'other') | null;
-  /**
-   * Internal notes about this subscriber
-   */
-  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -835,20 +319,8 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'articles';
-        value: string | Article;
-      } | null)
-    | ({
-        relationTo: 'services';
-        value: string | Service;
-      } | null)
-    | ({
-        relationTo: 'team';
-        value: string | Team;
+        relationTo: 'posts';
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'categories';
@@ -857,18 +329,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tags';
         value: string | Tag;
-      } | null)
-    | ({
-        relationTo: 'locations';
-        value: string | Location;
-      } | null)
-    | ({
-        relationTo: 'contact';
-        value: string | Contact;
-      } | null)
-    | ({
-        relationTo: 'newsletter';
-        value: string | Newsletter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -957,103 +417,9 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
+ * via the `definition` "posts_select".
  */
-export interface PagesSelect<T extends boolean = true> {
-  title?: T;
-  excerpt?: T;
-  featuredImage?: T;
-  blocks?:
-    | T
-    | {
-        highImpactHero?: T | HighImpactHeroBlockSelect<T>;
-        callToAction?: T | CallToActionBlockSelect<T>;
-        content?: T | ContentBlockSelect<T>;
-        mediaBlock?: T | MediaBlockSelect<T>;
-      };
-  published?: T;
-  publishedAt?: T;
-  showInNavigation?: T;
-  order?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-        ogImage?: T;
-      };
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HighImpactHeroBlock_select".
- */
-export interface HighImpactHeroBlockSelect<T extends boolean = true> {
-  title?: T;
-  subtitle?: T;
-  description?: T;
-  media?: T;
-  links?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        variant?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock_select".
- */
-export interface CallToActionBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  links?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        variant?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlock_select".
- */
-export interface ContentBlockSelect<T extends boolean = true> {
-  title?: T;
-  content?: T;
-  layout?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock_select".
- */
-export interface MediaBlockSelect<T extends boolean = true> {
-  media?: T;
-  caption?: T;
-  layout?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles_select".
- */
-export interface ArticlesSelect<T extends boolean = true> {
+export interface PostsSelect<T extends boolean = true> {
   title?: T;
   excerpt?: T;
   featuredImage?: T;
@@ -1081,86 +447,13 @@ export interface ArticlesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services_select".
- */
-export interface ServicesSelect<T extends boolean = true> {
-  title?: T;
-  shortDescription?: T;
-  description?: T;
-  featuredImage?: T;
-  gallery?:
-    | T
-    | {
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
-  category?: T;
-  pricing?:
-    | T
-    | {
-        startingPrice?: T;
-        priceRange?: T;
-        pricingDetails?: T;
-        currency?: T;
-      };
-  features?:
-    | T
-    | {
-        feature?: T;
-        description?: T;
-        id?: T;
-      };
-  active?: T;
-  featured?: T;
-  order?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-        ogImage?: T;
-      };
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team_select".
- */
-export interface TeamSelect<T extends boolean = true> {
-  name?: T;
-  position?: T;
-  bio?: T;
-  shortBio?: T;
-  photo?: T;
-  email?: T;
-  phone?: T;
-  social?:
-    | T
-    | {
-        linkedin?: T;
-        twitter?: T;
-        website?: T;
-      };
-  active?: T;
-  featured?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
+  color?: T;
   active?: T;
   order?: T;
   updatedAt?: T;
@@ -1174,93 +467,8 @@ export interface TagsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
+  type?: T;
   active?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations_select".
- */
-export interface LocationsSelect<T extends boolean = true> {
-  name?: T;
-  address?:
-    | T
-    | {
-        street?: T;
-        city?: T;
-        state?: T;
-        zipCode?: T;
-        country?: T;
-      };
-  coordinates?:
-    | T
-    | {
-        latitude?: T;
-        longitude?: T;
-      };
-  contact?:
-    | T
-    | {
-        phone?: T;
-        email?: T;
-      };
-  hours?:
-    | T
-    | {
-        monday?: T;
-        tuesday?: T;
-        wednesday?: T;
-        thursday?: T;
-        friday?: T;
-        saturday?: T;
-        sunday?: T;
-      };
-  active?: T;
-  primary?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact_select".
- */
-export interface ContactSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  subject?: T;
-  message?: T;
-  status?: T;
-  priority?: T;
-  assignedTo?: T;
-  notes?: T;
-  response?: T;
-  respondedAt?: T;
-  source?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletter_select".
- */
-export interface NewsletterSelect<T extends boolean = true> {
-  email?: T;
-  firstName?: T;
-  lastName?: T;
-  status?: T;
-  source?: T;
-  interests?:
-    | T
-    | {
-        interest?: T;
-        id?: T;
-      };
-  unsubscribedAt?: T;
-  unsubscribeReason?: T;
-  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

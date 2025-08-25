@@ -9,12 +9,12 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 export const metadata: Metadata = {
-  title: 'Blog - Company Name',
-  description: 'Read our latest articles, insights, and industry updates. Stay informed with expert analysis and professional perspectives.',
-  keywords: 'blog, articles, insights, industry news, professional updates',
+  title: 'Medical Blog - Sanimed International | Molecular Diagnostics & Healthcare Insights',
+  description: 'Stay informed with the latest insights in molecular diagnostics, precision medicine, genetics, and clinical laboratory advances from Sanimed International experts.',
+  keywords: 'medical blog, molecular diagnostics, precision medicine, genetics, clinical laboratory, healthcare insights, UAE medical news',
   openGraph: {
-    title: 'Blog - Company Name',
-    description: 'Read our latest articles, insights, and industry updates.',
+    title: 'Medical Blog - Sanimed International',
+    description: 'Expert insights in molecular diagnostics, precision medicine, and healthcare innovation from Sanimed International.',
     type: 'website',
   },
 }
@@ -57,7 +57,7 @@ export default async function BlogPage() {
   try {
     // Fetch blog posts and categories
     const [postsResponse, categoriesResponse] = await Promise.all([
-      api.articles.getPublished({ limit: 50, sort: '-publishedDate' }),
+      api.posts.getPublished({ limit: 50, sort: '-publishedDate' }),
       api.categories.getAll({ limit: 20 })
     ])
 
@@ -67,20 +67,24 @@ export default async function BlogPage() {
     return (
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-to-br from-primary/5 via-background to-muted/30">
+        <section className="py-16 bg-gradient-to-br from-blue-50 via-background to-green-50">
           <div className="container mx-auto px-4 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="text-6xl text-blue-600">🧬</div>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Our Blog
+              Medical <span className="text-blue-600">Insights</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Discover insights, industry trends, and expert perspectives from our team of professionals.
+              Stay informed with the latest advances in molecular diagnostics, precision medicine, genetics, 
+              and clinical laboratory sciences from our team of medical experts and researchers.
             </p>
             
             {/* Search Bar */}
             <div className="max-w-md mx-auto relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search articles..."
+                placeholder="Search medical articles and insights..."
                 className="pl-10 pr-4 py-3 text-base"
               />
             </div>
@@ -91,9 +95,9 @@ export default async function BlogPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Sidebar */}
             <aside className="lg:col-span-1 space-y-8">
-              {/* Categories */}
-              <div className="bg-card rounded-lg p-6 border">
-                <h3 className="text-lg font-semibold mb-4">Categories</h3>
+              {/* Medical Categories */}
+              <div className="bg-card rounded-lg p-6 border border-l-4 border-l-blue-600">
+                <h3 className="text-lg font-semibold mb-4 text-blue-900">Medical Categories</h3>
                 <div className="space-y-2">
                   {categories.map((category) => (
                     <Link
@@ -110,11 +114,11 @@ export default async function BlogPage() {
                 </div>
               </div>
 
-              {/* Newsletter Signup */}
-              <div className="bg-primary/5 rounded-lg p-6 border border-primary/20">
-                <h3 className="text-lg font-semibold mb-3">Stay Updated</h3>
+              {/* Medical Newsletter Signup */}
+              <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
+                <h3 className="text-lg font-semibold mb-3 text-blue-900">Stay Updated</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Get the latest articles and insights delivered to your inbox.
+                  Get the latest medical insights and diagnostic advances delivered to your inbox.
                 </p>
                 <div className="space-y-3">
                   <Input placeholder="Enter your email" className="text-sm" />
@@ -129,10 +133,11 @@ export default async function BlogPage() {
             <main className="lg:col-span-3">
               {posts.length === 0 ? (
                 <div className="text-center py-16">
-                  <div className="text-6xl mb-4">📝</div>
-                  <h3 className="text-xl font-semibold mb-2">No blog posts yet</h3>
+                  <div className="text-6xl mb-4">🧬</div>
+                  <h3 className="text-xl font-semibold mb-2">Medical Content Coming Soon</h3>
                   <p className="text-muted-foreground mb-6">
-                    Check back soon for our first articles, or create some content in the CMS admin panel.
+                    We're preparing exciting medical insights and diagnostic updates. Check back soon for the latest 
+                    in molecular diagnostics and precision medicine, or contact our team for more information.
                   </p>
                   <Button asChild>
                     <Link href="/contact">Get in Touch</Link>
@@ -143,7 +148,7 @@ export default async function BlogPage() {
                   {/* Featured Post */}
                   {posts.length > 0 && (
                     <div className="mb-12">
-                      <h2 className="text-2xl font-bold mb-6">Featured Article</h2>
+                      <h2 className="text-2xl font-bold mb-6">Featured Medical Insight</h2>
                       <Card className="overflow-hidden">
                         <div className="grid md:grid-cols-2">
                           {posts[0].featuredImage && (
@@ -200,7 +205,7 @@ export default async function BlogPage() {
 
                   {/* All Posts Grid */}
                   <div>
-                    <h2 className="text-2xl font-bold mb-6">Latest Articles</h2>
+                    <h2 className="text-2xl font-bold mb-6">Latest Medical Research & Insights</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {posts.slice(1).map((post) => (
                         <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -266,7 +271,7 @@ export default async function BlogPage() {
                   {posts.length >= 50 && (
                     <div className="text-center mt-12">
                       <Button variant="outline" size="lg">
-                        Load More Articles
+                        Load More Medical Content
                       </Button>
                     </div>
                   )}
@@ -282,13 +287,17 @@ export default async function BlogPage() {
     
     return (
       <div className="min-h-screen bg-background">
-        <section className="py-16 bg-gradient-to-br from-primary/5 via-background to-muted/30">
+        <section className="py-16 bg-gradient-to-br from-blue-50 via-background to-green-50">
           <div className="container mx-auto px-4 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="text-6xl text-blue-600">🧬</div>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Our Blog
+              Medical <span className="text-blue-600">Insights</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Discover insights, industry trends, and expert perspectives from our team of professionals.
+              Stay informed with the latest advances in molecular diagnostics, precision medicine, genetics, 
+              and clinical laboratory sciences from our team of medical experts and researchers.
             </p>
           </div>
         </section>

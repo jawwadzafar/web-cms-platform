@@ -5,6 +5,8 @@ export const Tags: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'active', 'updatedAt'],
+    description: 'Tag blog posts with medical terminology, conditions, and healthcare topics',
+    group: 'Blog Management',
   },
   access: {
     read: () => true, // Public read access
@@ -28,7 +30,24 @@ export const Tags: CollectionConfig = {
       name: 'description',
       type: 'textarea',
       admin: {
-        description: 'Brief description of this tag',
+        description: 'Brief description of this medical/healthcare tag for SEO purposes',
+      },
+    },
+    {
+      name: 'type',
+      type: 'select',
+      options: [
+        { label: 'Medical Condition', value: 'condition' },
+        { label: 'Treatment/Therapy', value: 'treatment' },
+        { label: 'Diagnostic Test', value: 'diagnostic' },
+        { label: 'Research Topic', value: 'research' },
+        { label: 'Technology/Equipment', value: 'technology' },
+        { label: 'Industry News', value: 'news' },
+        { label: 'General', value: 'general' },
+      ],
+      defaultValue: 'general',
+      admin: {
+        description: 'Categorize the type of medical topic this tag represents',
       },
     },
     {

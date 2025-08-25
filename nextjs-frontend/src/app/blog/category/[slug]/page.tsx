@@ -79,7 +79,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     // Fetch category and posts
     const [categoryResponse, postsResponse] = await Promise.all([
       api.categories.getBySlug(params.slug),
-      api.articles.getAll({
+      api.posts.getAll({
         where: {
           category: { slug: { equals: params.slug } },
           status: { equals: 'published' }
