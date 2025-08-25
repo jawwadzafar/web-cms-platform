@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 
 export function Footer() {
@@ -8,15 +9,18 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
-              <span className="font-bold">Sanimed International</span>
+            <div className="flex items-center">
+              <Image 
+                src="/images/logos/sanimed-logo.png" 
+                alt="Sanimed International" 
+                width={160} 
+                height={36}
+                className="h-9 w-auto"
+              />
             </div>
             <p className="text-sm text-muted-foreground">
-              Leading molecular diagnostics, genetics, and clinical laboratory services. 
-              Advancing precision medicine in the UAE.
+              Solutions For A Changing World. Leading molecular diagnostics, genetics, 
+              and clinical laboratory services. Advancing precision medicine in the UAE.
             </p>
           </div>
 
@@ -69,8 +73,8 @@ export function Footer() {
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-muted-foreground" />
                 <div className="text-sm text-muted-foreground">
-                  <p>Abu Dhabi: +971-2-6767676</p>
-                  <p>Sharjah: +971-6-5644445</p>
+                  <p>Abu Dhabi: +971-50-228-5309</p>
+                  <p>Sharjah: +971-50-228-4629</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">

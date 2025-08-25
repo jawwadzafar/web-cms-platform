@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Menu, X, Phone, Mail } from 'lucide-react'
 
 export function Header() {
@@ -15,11 +15,14 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">C</span>
-            </div>
-            <span className="font-bold text-xl">Company</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <Image 
+              src="/images/logos/sanimed-logo.png" 
+              alt="Sanimed International" 
+              width={180} 
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -41,22 +44,19 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Right side: Theme Toggle, Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
+          {/* Right side: Contact Info & CTA */}
+          <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4" />
-                <span>(555) 123-4567</span>
+                <span>+971-50-228-5309</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
-                <span>info@company.com</span>
+                <span>customercare@sanimedgroup.com</span>
               </div>
             </div>
-            <Button asChild>
+            <Button asChild className="bg-blue-600 hover:bg-blue-700">
               <Link href="/contact">Get Started</Link>
             </Button>
           </div>
@@ -73,10 +73,13 @@ export function Header() {
               <nav className="flex flex-col space-y-4">
                 <div className="flex items-center justify-between">
                   <Link href="/" className="flex items-center space-x-2" onClick={() => setMobileMenuOpen(false)}>
-                    <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                      <span className="text-primary-foreground font-bold text-sm">C</span>
-                    </div>
-                    <span className="font-bold text-xl">Company</span>
+                    <Image 
+                      src="/images/logos/sanimed-logo.png" 
+                      alt="Sanimed International" 
+                      width={140} 
+                      height={32}
+                      className="h-8 w-auto"
+                    />
                   </Link>
                   <Button
                     variant="ghost"
@@ -126,21 +129,17 @@ export function Header() {
                 </div>
 
                 <div className="border-t pt-4 mt-4">
-                  {/* Theme Toggle in Mobile Menu */}
-                  <div className="flex justify-center mb-4">
-                    <ThemeToggle />
-                  </div>
-                  <div className="space-y-2 text-sm text-muted-foreground">
+                  <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex items-center space-x-2">
                       <Phone className="h-4 w-4" />
-                      <span>(555) 123-4567</span>
+                      <span>+971-50-228-5309</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Mail className="h-4 w-4" />
-                      <span>info@company.com</span>
+                      <span>customercare@sanimedgroup.com</span>
                     </div>
                   </div>
-                  <Button asChild className="w-full mt-4">
+                  <Button asChild className="w-full mt-6 bg-blue-600 hover:bg-blue-700">
                     <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
                   </Button>
                 </div>

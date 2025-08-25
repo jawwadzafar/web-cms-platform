@@ -165,6 +165,15 @@ export default function ClinicalDiagnosticsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-purple-900/70 to-purple-600/70" />
         </div>
         <div className="relative container mx-auto px-4 text-center">
+          <div className="mb-8">
+            <Image 
+              src="/images/logos/sanimed-logo-white.png" 
+              alt="Sanimed International" 
+              width={240} 
+              height={54}
+              className="h-14 w-auto mx-auto mb-6 opacity-90"
+            />
+          </div>
           <div className="bg-purple-600 text-white rounded-full p-6 w-20 h-20 flex items-center justify-center mx-auto mb-6">
             <FlaskConical className="h-10 w-10" />
           </div>
@@ -216,30 +225,29 @@ export default function ClinicalDiagnosticsPage() {
               </div>
             </div>
             
-            <div className="relative">
-              <Card className="border-l-4 border-l-purple-600">
-                <CardHeader>
-                  <CardTitle className="text-xl">Why Choose Our Laboratory?</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Advanced Automation</h4>
-                    <p className="text-sm text-muted-foreground">Latest generation automated analyzers for precision and speed</p>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Why Choose Our Laboratory?</h3>
+                <div className="space-y-6">
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-purple-800 group-hover/item:text-purple-900">Advanced Automation</h4>
+                    <p className="text-sm text-purple-700 group-hover/item:text-purple-800">Latest generation automated analyzers for precision and speed</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Quality Assurance</h4>
-                    <p className="text-sm text-muted-foreground">Rigorous quality control and external proficiency testing</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-purple-800 group-hover/item:text-purple-900">Quality Assurance</h4>
+                    <p className="text-sm text-purple-700 group-hover/item:text-purple-800">Rigorous quality control and external proficiency testing</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Rapid Turnaround</h4>
-                    <p className="text-sm text-muted-foreground">Fast reporting with critical value notification systems</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-purple-800 group-hover/item:text-purple-900">Rapid Turnaround</h4>
+                    <p className="text-sm text-purple-700 group-hover/item:text-purple-800">Fast reporting with critical value notification systems</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Expert Staff</h4>
-                    <p className="text-sm text-muted-foreground">Experienced laboratory professionals and pathologists</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-purple-800 group-hover/item:text-purple-900">Expert Staff</h4>
+                    <p className="text-sm text-purple-700 group-hover/item:text-purple-800">Experienced laboratory professionals and pathologists</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -298,7 +306,9 @@ export default function ClinicalDiagnosticsPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {specializedTests.map((category, index) => (
-              <Card key={index} className="border-l-4 border-l-purple-600">
+              <div key={index} className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-700"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <CardHeader>
                   <CardTitle className="text-lg text-purple-900">{category.category}</CardTitle>
                   <CardDescription className="text-sm">{category.description}</CardDescription>
@@ -312,7 +322,8 @@ export default function ClinicalDiagnosticsPage() {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>

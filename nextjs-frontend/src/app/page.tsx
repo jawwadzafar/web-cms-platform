@@ -2,9 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, MapPin, Calendar, User } from 'lucide-react'
+import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, Users, Globe } from 'lucide-react'
 import { api } from '@/lib/api-client'
 
 export const metadata: Metadata = {
@@ -54,273 +52,320 @@ export default async function HomePage() {
   const { posts } = await getHomepageData()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center bg-black overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero/laboratory-main.jpg"
-            alt="Advanced Laboratory Facility"
+            src="/images/hero/medical-laboratory-hero.jpg"
+            alt="Advanced Medical Laboratory"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-800/70 to-green-900/80" />
+          <div className="absolute inset-0 bg-black/70" />
         </div>
-        <div className="relative container mx-auto px-4 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-full p-6 border border-white/20">
-              <Dna className="h-12 w-12 text-white" />
-            </div>
+        
+        <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4">
+          <div className="mb-12">
+            <Image 
+              src="/images/logos/sanimed-logo-white.png" 
+              alt="Sanimed International" 
+              width={400} 
+              height={90}
+              className="h-20 w-auto mx-auto mb-8"
+            />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-white">
-            Leading in
-            <span className="text-blue-300 block">Molecular Diagnostics</span>
+          
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-light mb-8 tracking-tight leading-none">
+            Solutions For A<br />
+            <span className="text-blue-400">Changing World</span>
           </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-            Sanimed International is at the forefront of precision medicine, offering advanced molecular diagnostics, 
-            genetics, and clinical diagnostics services across the UAE.
+          
+          <p className="text-xl md:text-2xl font-light opacity-90 mb-16 max-w-3xl mx-auto leading-relaxed">
+            Leading molecular diagnostics, genetics, and clinical laboratory services. 
+            Advancing precision medicine across the UAE.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 border-0">
-              <Link href="/services">Our Services</Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild className="border-white text-white hover:bg-white hover:text-blue-600">
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge variant="outline" className="mb-6 text-blue-600 border-blue-600">About Sanimed</Badge>
-              <h2 className="text-3xl font-bold mb-6 text-blue-900">Our Mission</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                To provide accurate, reliable, and timely diagnostic services that support healthcare professionals 
-                in delivering the best possible patient care. We are committed to advancing precision medicine 
-                through innovative molecular diagnostic solutions.
-              </p>
-              <h2 className="text-3xl font-bold mb-6 text-blue-900">Our Vision</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                To be the region's most trusted partner in molecular diagnostics and precision medicine, 
-                contributing to improved healthcare outcomes through cutting-edge technology and scientific excellence.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                We are actively developing an <strong>R&D Center for Precision Medicine</strong> to further 
-                advance healthcare innovation in the region.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/facility/modern-lab.jpg"
-                  alt="Modern Laboratory Facility"
-                  width={600}
-                  height={400}
-                  className="object-cover rounded-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent rounded-2xl" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                      <Microscope className="h-8 w-8 text-white mx-auto mb-2" />
-                      <h3 className="font-semibold text-white text-sm">Advanced Technology</h3>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                      <Dna className="h-8 w-8 text-white mx-auto mb-2" />
-                      <h3 className="font-semibold text-white text-sm">Genetic Expertise</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Overview */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Core Services</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Three specialized areas of expertise delivering comprehensive diagnostic solutions.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-blue-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                  <Microscope className="h-12 w-12 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Molecular Diagnostics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  Advanced molecular testing using cutting-edge technology to detect genetic variations, 
-                  infectious diseases, and cancer biomarkers with exceptional accuracy.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-green-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-green-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                  <Dna className="h-12 w-12 text-green-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Genetics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  Comprehensive genetic testing and analysis services including hereditary disease screening, 
-                  pharmacogenomics, and personalized medicine solutions.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-purple-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                  <FlaskConical className="h-12 w-12 text-purple-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Clinical Diagnostics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed">
-                  Full range of clinical laboratory services including biochemistry, hematology, immunology, 
-                  and microbiology to support comprehensive patient care.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="text-center mt-12">
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Button 
+              asChild 
+              size="lg" 
+              className="bg-white text-black hover:bg-gray-100 px-8 py-4 rounded-none font-normal text-lg"
+            >
               <Link href="/services">
-                Learn More About Our Services
-                <ArrowRight className="ml-2 h-4 w-4" />
+                Explore Services
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              asChild 
+              className="border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-normal text-lg"
+            >
+              <Link href="/contact">
+                Contact Our Experts
               </Link>
             </Button>
           </div>
+          
+          <div className="flex justify-center">
+            <div className="w-px h-16 bg-white/30"></div>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60">
+          <div className="animate-bounce">
+            <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
+              <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Latest News & Updates */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Latest News & Updates</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Stay informed about our latest developments, medical insights, and industry news.
+      {/* Services Preview */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-20">
+            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 block">
+              Our Expertise
+            </span>
+            <h2 className="text-5xl md:text-6xl font-light text-gray-900 mb-8 leading-tight">
+              Three Core Services
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Specialized diagnostic excellence serving healthcare providers across the UAE 
+              with precision, speed, and reliability.
             </p>
           </div>
           
-          {posts.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {posts.map((post) => (
-                  <Card key={post.id} className="group hover:shadow-lg transition-shadow duration-300">
-                    {post.featuredImage && (
-                      <div className="relative h-48 overflow-hidden rounded-t-lg">
-                        <Image
-                          src={post.featuredImage.url}
-                          alt={post.featuredImage.alt || post.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <CardHeader>
-                      <CardTitle className="line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        {post.title}
-                      </CardTitle>
-                      <CardDescription className="line-clamp-3">
-                        {post.excerpt}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4" />
-                          {new Date(post.publishedDate).toLocaleDateString()}
-                        </div>
-                        {post.author && (
-                          <div className="flex items-center gap-2">
-                            <User className="h-4 w-4" />
-                            {post.author.name}
-                          </div>
-                        )}
-                      </div>
-                      <Button asChild className="w-full group bg-blue-600 hover:bg-blue-700">
-                        <Link href={`/blog/${post.slug}`}>
-                          Read More
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+          <div className="grid lg:grid-cols-3 gap-16">
+            {/* Molecular Diagnostics */}
+            <div className="group">
+              <div className="relative h-80 mb-8 overflow-hidden">
+                <Image
+                  src="/images/services/molecular-diagnostics.jpg"
+                  alt="Molecular Diagnostics"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute top-6 left-6">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                    <Microscope className="w-6 h-6 text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="text-center mt-8">
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/blog">View All Posts</Link>
+              
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">01</span>
+                  <h3 className="text-2xl font-light text-gray-900">Molecular Diagnostics</h3>
+                </div>
+                
+                <p className="text-gray-600 leading-relaxed">
+                  Advanced PCR and NGS testing with UAE-wide coverage through 62 collection sites.
+                </p>
+                
+                <div className="text-sm text-gray-500">
+                  <div>UAE-wide • 62 Sites • 24-48hr TAT</div>
+                </div>
+                
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                >
+                  <Link href="/services/molecular-diagnostics">
+                    Learn More
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
                 </Button>
               </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">📰</div>
-              <h3 className="text-xl font-semibold mb-2">Coming Soon</h3>
-              <p className="text-muted-foreground mb-6">
-                We're preparing exciting news and updates. Check back soon for the latest in molecular diagnostics and precision medicine.
-              </p>
-              <Button asChild className="bg-blue-600 hover:bg-blue-700">
-                <Link href="/contact">Stay in Touch</Link>
-              </Button>
             </div>
-          )}
+
+            {/* Genetics */}
+            <div className="group">
+              <div className="relative h-80 mb-8 overflow-hidden">
+                <Image
+                  src="/images/services/genetics.jpg"
+                  alt="Genetics"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute top-6 left-6">
+                  <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
+                    <Dna className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">02</span>
+                  <h3 className="text-2xl font-light text-gray-900">Genetics</h3>
+                </div>
+                
+                <p className="text-gray-600 leading-relaxed">
+                  Comprehensive genetic testing including hereditary disease screening and counseling.
+                </p>
+                
+                <div className="text-sm text-gray-500">
+                  <div>BRCA1/2 • Lynch Syndrome • Pharmacogenomics</div>
+                </div>
+                
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                >
+                  <Link href="/services/genetics">
+                    Learn More
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Clinical Diagnostics */}
+            <div className="group">
+              <div className="relative h-80 mb-8 overflow-hidden">
+                <Image
+                  src="/images/services/clinical-diagnostics.jpg"
+                  alt="Clinical Diagnostics"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute top-6 left-6">
+                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
+                    <FlaskConical className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">03</span>
+                  <h3 className="text-2xl font-light text-gray-900">Clinical Diagnostics</h3>
+                </div>
+                
+                <p className="text-gray-600 leading-relaxed">
+                  Complete laboratory services with automated systems for rapid, accurate results.
+                </p>
+                
+                <div className="text-sm text-gray-500">
+                  <div>Automated • CAP Certified • Rapid Reporting</div>
+                </div>
+                
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  className="border-gray-300 text-gray-900 hover:bg-gray-50 rounded-none font-normal w-full"
+                >
+                  <Link href="/services/clinical-diagnostics">
+                    Learn More
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Statement */}
+      <section className="py-32 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8 block">
+            Our Mission
+          </span>
+          <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-8 leading-tight">
+            Enhancing Medical Infrastructure<br />
+            Across the UAE
+          </h2>
+          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+            Sanimed International Lab develops strategies to enhance medical infrastructure in the UAE, 
+            introducing advanced technology and AI in healthcare while supporting local medical talent development.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-16 mb-16">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Our Vision</h3>
+              <p className="text-gray-600 leading-relaxed">
+                To establish the Sanimed R&D Center for Precision Medicine, focusing on cancer 
+                and rare genetic diseases, metabolic disorders, and multiomics laboratory development.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Our Impact</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Serving healthcare providers across all UAE emirates through our extensive network 
+                of collection sites and advanced diagnostic capabilities.
+              </p>
+            </div>
+          </div>
+          
+          <Button 
+            asChild 
+            size="lg" 
+            className="bg-gray-900 hover:bg-black text-white px-8 py-3 rounded-none font-normal"
+          >
+            <Link href="/about">
+              About Sanimed
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </section>
 
       {/* Contact CTA */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Partner with Us?</h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+      <section className="py-32 bg-black">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-8 leading-tight">
+            Ready to Partner<br />
+            with Us?
+          </h2>
+          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
             Contact Sanimed International for advanced diagnostic solutions and precision medicine services.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" asChild>
-              <Link href="/contact">Get in Touch</Link>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Button 
+              size="lg" 
+              className="bg-white text-black hover:bg-gray-100 px-8 py-4 rounded-none font-normal"
+            >
+              <Phone className="mr-2 w-5 h-5" />
+              Contact Our Team
             </Button>
-            <Button variant="outline" size="lg" asChild className="border-white text-white hover:bg-white hover:text-blue-600">
-              <Link href="/services">Our Services</Link>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-normal"
+            >
+              <Mail className="mr-2 w-5 h-5" />
+              Request Information
             </Button>
           </div>
-          
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-3">
-              <Phone className="h-5 w-5" />
-              <div className="text-left">
-                <p className="font-semibold">Abu Dhabi</p>
-                <p className="opacity-90">+971-2-6767676</p>
-              </div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <Phone className="w-8 h-8 text-gray-400 mx-auto mb-4" />
+              <div className="text-white font-semibold mb-1">Abu Dhabi</div>
+              <div className="text-gray-400">+971-2-6767676</div>
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <Phone className="h-5 w-5" />
-              <div className="text-left">
-                <p className="font-semibold">Sharjah</p>
-                <p className="opacity-90">+971-6-5644445</p>
-              </div>
+            <div className="text-center">
+              <Phone className="w-8 h-8 text-gray-400 mx-auto mb-4" />
+              <div className="text-white font-semibold mb-1">Sharjah</div>
+              <div className="text-gray-400">+971-6-5644445</div>
             </div>
-          </div>
-          
-          <div className="flex items-center justify-center gap-3 mt-6">
-            <Mail className="h-5 w-5" />
-            <p className="opacity-90">customercare@sanimedgroup.com</p>
+            <div className="text-center">
+              <Mail className="w-8 h-8 text-gray-400 mx-auto mb-4" />
+              <div className="text-white font-semibold mb-1">Email</div>
+              <div className="text-gray-400">customercare@sanimedgroup.com</div>
+            </div>
           </div>
         </div>
       </section>

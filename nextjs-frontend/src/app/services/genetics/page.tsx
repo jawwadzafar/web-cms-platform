@@ -165,6 +165,15 @@ export default function GeneticsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 to-green-600/70" />
         </div>
         <div className="relative container mx-auto px-4 text-center">
+          <div className="mb-8">
+            <Image 
+              src="/images/logos/sanimed-logo-white.png" 
+              alt="Sanimed International" 
+              width={240} 
+              height={54}
+              className="h-14 w-auto mx-auto mb-6 opacity-90"
+            />
+          </div>
           <div className="bg-green-600 text-white rounded-full p-6 w-20 h-20 flex items-center justify-center mx-auto mb-6">
             <Dna className="h-10 w-10" />
           </div>
@@ -215,30 +224,29 @@ export default function GeneticsPage() {
               </div>
             </div>
             
-            <div className="relative">
-              <Card className="border-l-4 border-l-green-600">
-                <CardHeader>
-                  <CardTitle className="text-xl">Why Choose Our Genetics Services?</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Expert Genetic Counselors</h4>
-                    <p className="text-sm text-muted-foreground">Board-certified genetic counselors for pre and post-test support</p>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Why Choose Our Genetics Services?</h3>
+                <div className="space-y-6">
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-green-800 group-hover/item:text-green-900">Expert Genetic Counselors</h4>
+                    <p className="text-sm text-green-700 group-hover/item:text-green-800">Board-certified genetic counselors for pre and post-test support</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Comprehensive Testing</h4>
-                    <p className="text-sm text-muted-foreground">From single genes to whole exome sequencing panels</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-green-800 group-hover/item:text-green-900">Comprehensive Testing</h4>
+                    <p className="text-sm text-green-700 group-hover/item:text-green-800">From single genes to whole exome sequencing panels</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Clinical Interpretation</h4>
-                    <p className="text-sm text-muted-foreground">Detailed reports with actionable medical recommendations</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-green-800 group-hover/item:text-green-900">Clinical Interpretation</h4>
+                    <p className="text-sm text-green-700 group-hover/item:text-green-800">Detailed reports with actionable medical recommendations</p>
                   </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Family Support</h4>
-                    <p className="text-sm text-muted-foreground">Cascade testing and family risk assessment services</p>
+                  <div className="group/item p-4 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-2 text-green-800 group-hover/item:text-green-900">Family Support</h4>
+                    <p className="text-sm text-green-700 group-hover/item:text-green-800">Cascade testing and family risk assessment services</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -297,7 +305,9 @@ export default function GeneticsPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pharmacogenomics.map((category, index) => (
-              <Card key={index} className="border-l-4 border-l-green-600">
+              <div key={index} className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-700"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <CardHeader>
                   <CardTitle className="text-lg text-green-900">{category.category}</CardTitle>
                 </CardHeader>
@@ -323,7 +333,8 @@ export default function GeneticsPage() {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
