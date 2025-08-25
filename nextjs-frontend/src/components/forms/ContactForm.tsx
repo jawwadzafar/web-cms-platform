@@ -1,116 +1,147 @@
-'use client'
+"use client"
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { contactSchema, type ContactFormData } from '@/lib/validations/contact'
-import { api } from '@/lib/api'
+import * as yup from 'yup'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2, Send, CheckCircle, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
+import { api } from '@/lib/api-client'
+import { Send, CheckCircle, AlertCircle } from 'lucide-react'
+
+const schema = yup.object({
+  name: yup.string().required('Name is required'),
+  email: yup.string().email('Valid email is required').required('Email is required'),
+  phone: yup.string().optional(),
+  subject: yup.string().required('Subject is required'),
+  message: yup.string().required('Message is required').min(10, 'Message must be at least 10 characters'),
+}).required()
+
+type FormData = yup.InferType<typeof schema>
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
-  } = useForm({
-    resolver: yupResolver(contactSchema),
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
   })
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
-    setSubmitStatus('idle')
-    setErrorMessage('')
-
+    
     try {
-      await api.post('/contact', data)
-      setSubmitStatus('success')
+      await api.contact.submit(data)
+      
+      toast.success('Message sent successfully!', {
+        description: 'We\'ll get back to you as soon as possible.',
+        icon: <CheckCircle className="h-4 w-4" />,
+      })
+      
+      setIsSubmitted(true)
       reset()
-    } catch (error: any) {
-      setSubmitStatus('error')
-      setErrorMessage(error.response?.data?.message || 'Failed to send message. Please try again.')
+    } catch (error) {
+      console.error('Contact form error:', error)
+      
+      toast.error('Failed to send message', {
+        description: 'Please try again or contact us directly.',
+        icon: <AlertCircle className="h-4 w-4" />,
+      })
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  if (isSubmitted) {
+    return (
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <CheckCircle className="h-8 w-8 text-green-600" />
+          </div>
+          <CardTitle className="text-2xl">Thank You!</CardTitle>
+          <CardDescription>
+            Your message has been sent successfully. We'll get back to you as soon as possible.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center">
+          <Button 
+            onClick={() => setIsSubmitted(false)}
+            variant="outline"
+          >
+            Send Another Message
+          </Button>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Send className="w-5 h-5" />
-          Contact Us
-        </CardTitle>
+        <CardTitle className="text-2xl">Get in Touch</CardTitle>
         <CardDescription>
-          Send us a message and we&apos;ll get back to you as soon as possible.
+          Fill out the form below and we'll get back to you as soon as possible.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name *</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Your full name"
-                {...register('name')}
-                className={errors.name ? 'border-destructive' : ''}
-              />
-              {errors.name && (
-                <p className="text-sm text-destructive">{errors.name.message}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                {...register('email')}
-                className={errors.email ? 'border-destructive' : ''}
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">Name *</Label>
+            <Input
+              id="name"
+              {...register('name')}
+              placeholder="Your full name"
+              className={errors.name ? 'border-red-500' : ''}
+            />
+            {errors.name && (
+              <p className="text-sm text-red-500">{errors.name.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone (optional)</Label>
+            <Label htmlFor="email">Email *</Label>
+            <Input
+              id="email"
+              type="email"
+              {...register('email')}
+              placeholder="your.email@example.com"
+              className={errors.email ? 'border-red-500' : ''}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone (Optional)</Label>
             <Input
               id="phone"
               type="tel"
-              placeholder="+1 (555) 123-4567"
               {...register('phone')}
-              className={errors.phone ? 'border-destructive' : ''}
+              placeholder="+1 (555) 123-4567"
             />
-            {errors.phone && (
-              <p className="text-sm text-destructive">{errors.phone.message}</p>
-            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="subject">Subject *</Label>
             <Input
               id="subject"
-              type="text"
-              placeholder="What can we help you with?"
               {...register('subject')}
-              className={errors.subject ? 'border-destructive' : ''}
+              placeholder="What's this about?"
+              className={errors.subject ? 'border-red-500' : ''}
             />
             {errors.subject && (
-              <p className="text-sm text-destructive">{errors.subject.message}</p>
+              <p className="text-sm text-red-500">{errors.subject.message}</p>
             )}
           </div>
 
@@ -118,48 +149,29 @@ export function ContactForm() {
             <Label htmlFor="message">Message *</Label>
             <Textarea
               id="message"
-              placeholder="Tell us more about your inquiry..."
-              rows={6}
               {...register('message')}
-              className={errors.message ? 'border-destructive' : ''}
+              placeholder="Tell us more about your inquiry..."
+              rows={5}
+              className={errors.message ? 'border-red-500' : ''}
             />
             {errors.message && (
-              <p className="text-sm text-destructive">{errors.message.message}</p>
+              <p className="text-sm text-red-500">{errors.message.message}</p>
             )}
           </div>
-
-          {submitStatus === 'success' && (
-            <Alert className="border-green-200 bg-green-50">
-              <CheckCircle className="w-4 h-4 text-green-600" />
-              <AlertDescription className="text-green-800">
-                Your message has been sent successfully! We&apos;ll get back to you soon.
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {submitStatus === 'error' && (
-            <Alert className="border-destructive">
-              <AlertCircle className="w-4 h-4" />
-              <AlertDescription>
-                {errorMessage}
-              </AlertDescription>
-            </Alert>
-          )}
 
           <Button 
             type="submit" 
             className="w-full" 
             disabled={isSubmitting}
-            size="lg"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                 Sending...
               </>
             ) : (
               <>
-                <Send className="w-4 h-4 mr-2" />
+                <Send className="mr-2 h-4 w-4" />
                 Send Message
               </>
             )}

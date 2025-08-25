@@ -1,491 +1,345 @@
-# Medical Center CMS - Full Stack Headless CMS System
+# 🚀 System CMS - Complete Headless CMS Solution
 
-A complete headless CMS solution built with Payload CMS and Next.js, specifically designed for medical practices and healthcare organizations.
+A production-ready headless CMS built with **Payload CMS v3** and **Next.js 15**, featuring advanced content blocks, dynamic pages, and a modern admin interface.
+
+## ✨ Features
+
+### 🎯 Core Features
+- **Payload CMS v3** - Latest headless CMS with advanced admin panel
+- **Next.js 15** - Latest React framework with App Router
+- **TypeScript** - Full type safety across the stack
+- **Tailwind CSS v4** - Modern utility-first CSS framework
+- **shadcn/ui** - Beautiful, accessible UI components
+- **Dark/Light Mode** - Theme toggle with next-themes
+
+### 🏗️ Content Management
+- **Dynamic Pages** - Create pages with content blocks
+- **Blog Posts** - Rich content with categories and tags
+- **Services** - Service management with pricing and features
+- **Team Members** - Team profiles and management
+- **Media Library** - File uploads and organization
+- **Contact Forms** - Form submission handling
+- **Newsletter** - Email subscription management
+
+### 🧱 Content Blocks
+- **High Impact Hero** - Full-screen hero sections
+- **Call to Action** - Engaging CTA sections
+- **Content Blocks** - Rich text content areas
+- **Media Blocks** - Image and media displays
+- **Customizable Layouts** - Flexible content arrangement
+
+### 🔧 Technical Features
+- **Live Preview** - Preview content changes in real-time
+- **SEO Management** - Meta tags, descriptions, Open Graph
+- **API Integration** - RESTful API for frontend consumption
+- **Responsive Design** - Mobile-first design approach
+- **Performance Optimized** - Fast loading and smooth interactions
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Next.js       │    │   Payload CMS   │    │   MongoDB       │
-│   Frontend      │◄──►│   Backend       │◄──►│   Database      │
-│   (Port 3000)   │    │   (Port 3001)   │    │   (Port 27017)  │
+│   Frontend      │    │   Backend       │    │   Database      │
+│   (Next.js)     │◄──►│   (Payload CMS) │◄──►│   (MongoDB)     │
+│   Port: 3000    │    │   Port: 3100    │    │   Port: 27017   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
-         ▲                       ▲                       ▲
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 ▼
-                    ┌─────────────────┐
-                    │     Nginx       │
-                    │  Reverse Proxy  │
-                    │  (Port 80/443)  │
-                    └─────────────────┘
 ```
 
-## 🚀 Tech Stack
+## 🚀 Quick Start
 
-> **✅ Updated to Latest Versions (2024):** This system uses the exact same stack as the latest Next.js CLI with Next.js 15.5.0, React 19, Tailwind CSS v4, Turbopack, and ESLint v9.
-
-### Backend (Payload CMS)
-- **Payload CMS** - Latest version as headless CMS
-- **TypeScript** - Strict mode enabled
-- **MongoDB** - Database with Mongoose
-- **Node.js 18+** - Runtime environment
-- **Express** - Web framework
-- **JWT** - Authentication
-
-### Frontend (Next.js)
-- **Next.js 15.5.0** - Latest React framework with App Router & Turbopack
-- **React 19** - Latest React with Server Components
-- **TypeScript** - Strict mode enabled
-- **Tailwind CSS v4** - Latest styling framework (tailwindcss@^4 + @tailwindcss/postcss)
-- **shadcn/ui** - UI component library
-- **Framer Motion** - Animation library
-- **SWR** - Data fetching
-- **Axios** - HTTP client
-- **React Hook Form + Yup** - Form validation (Zod removed)
-- **ESLint v9** - Latest linting with @eslint/eslintrc
-- **next-themes** - Dark/light mode support
-
-### Infrastructure
-- **Docker** - Containerization
-- **Docker Compose** - Multi-container orchestration
-- **Nginx** - Reverse proxy and load balancing
-- **MongoDB** - NoSQL database
-
-## 📋 Prerequisites
-
-- **Node.js** 18 or higher
-- **Docker** and **Docker Compose**
-- **Git**
-- **npm** or **yarn**
-
-## 🎯 Quick Start
-
-### 1. Clone the Repository (or Initialize Git)
+### Option 1: Automated Setup (Recommended)
 
 ```bash
-# If cloning existing repository
-git clone <repository-url>
-cd system-cms
+# Make the setup script executable
+chmod +x setup-system.sh
 
-# If starting fresh (already initialized)
-cd system-cms
-git add .
-git commit -m "🎉 Initial commit: Medical Center CMS"
-# See GIT-SETUP.md for detailed Git workflow
+# Run the automated setup
+./setup-system.sh
 ```
 
-### 2. Set Up Environment Variables
+This script will:
+- ✅ Check requirements
+- ✅ Create environment files
+- ✅ Install dependencies
+- ✅ Start MongoDB (if Docker available)
+- ✅ Launch both services
+- ✅ Open your browser to the admin panel
+
+### Option 2: Manual Setup
+
+#### 1. Backend Setup (cms-admin)
 
 ```bash
-# Copy environment template
-cp .env.example .env
+cd cms-admin
 
-# Edit .env file with your values
-nano .env
+# Create .env file
+cat > .env << EOF
+DATABASE_URI=mongodb://localhost:27017/payload
+PAYLOAD_SECRET=your-super-secret-payload-key-change-in-production
+PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3100
+PORT=3100
+NODE_ENV=development
+NEXT_PUBLIC_SERVER_URL=http://localhost:3100
+CORS_ORIGINS=http://localhost:3000,http://localhost:3100
+CSRF_ORIGINS=http://localhost:3000,http://localhost:3100
+EOF
+
+# Install dependencies
+npm install
+
+# Start the backend
+npm run dev
 ```
 
-**Required Environment Variables:**
+#### 2. Frontend Setup (nextjs-frontend)
 
-```env
-# MongoDB
-MONGO_ROOT_USERNAME=admin
-MONGO_ROOT_PASSWORD=your-secure-password
+```bash
+cd nextjs-frontend
 
-# Payload CMS
-PAYLOAD_SECRET=your-32-character-secret-key
-JWT_SECRET=your-32-character-jwt-secret
-DATABASE_URI=mongodb://admin:your-password@localhost:27017/payload?authSource=admin
-
-# Next.js
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+# Create .env.local file
+cat > .env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:3100
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_NAME="Company Name"
+NEXT_PUBLIC_SITE_DESCRIPTION="Professional services and solutions for modern businesses"
+EOF
+
+# Install dependencies
+npm install
+
+# Start the frontend
+npm run dev
 ```
 
-### 3. Start with Docker Compose (Recommended)
+#### 3. Database Setup
 
 ```bash
-# Start all services in development mode
-docker-compose up -d
+# Option A: Docker (Recommended)
+docker run -d \
+  --name system-cms-mongodb \
+  -p 27017:27017 \
+  -e MONGO_INITDB_ROOT_USERNAME=admin \
+  -e MONGO_INITDB_ROOT_PASSWORD=password123 \
+  -e MONGO_INITDB_DATABASE=payload \
+  mongo:7.0
 
-# View logs
-docker-compose logs -f
-
-# Stop all services
-docker-compose down
+# Option B: Local MongoDB
+# Install MongoDB locally and start the service
 ```
 
-### 4. Manual Setup (Alternative)
+## 🌐 Access Points
 
-If you prefer running without Docker:
-
-```bash
-# Install backend dependencies
-cd payload-backend
-npm install
-npm run dev
-
-# In another terminal, install frontend dependencies
-cd ../nextjs-frontend
-npm install
-npm run dev
-
-# Make sure MongoDB is running locally
-```
-
-### 5. Access the Applications
+Once everything is running:
 
 - **Frontend Website**: http://localhost:3000
-- **Payload Admin Panel**: http://localhost:3001/admin
-- **Payload API**: http://localhost:3001/api
+- **CMS Admin Panel**: http://localhost:3100/admin
+- **API Endpoints**: http://localhost:3100/api
+- **Health Check**: http://localhost:3100/health
 
-**Default Admin Credentials:**
-- Email: `admin@medicalcenter.com`
-- Password: `Admin123!`
+## 🎨 Content Management
 
-## 🏃‍♂️ Development
+### Creating Your First Page
 
-### Project Structure
+1. **Access Admin Panel**: Go to http://localhost:3100/admin
+2. **Create User**: Set up your first admin user
+3. **Create Page**: Use the Pages collection
+4. **Add Blocks**: Choose from available content blocks
+5. **Publish**: Set the page to published status
 
-```
-system-cms/
-├── payload-backend/         # Payload CMS backend
-│   ├── src/
-│   │   ├── collections/     # Payload collections
-│   │   ├── lib/            # Utilities and helpers
-│   │   ├── server.ts       # Express server
-│   │   └── payload.config.ts
-│   ├── uploads/            # File storage
-│   └── Dockerfile
-├── nextjs-frontend/        # Next.js frontend
-│   ├── src/
-│   │   ├── app/           # App Router pages
-│   │   ├── components/    # React components
-│   │   ├── lib/          # API and utilities
-│   │   └── types/        # TypeScript types
-│   └── Dockerfile
-├── docker-compose.yml      # Development setup
-├── docker-compose.prod.yml # Production setup
-├── nginx.conf             # Nginx configuration
-└── README.md
-```
+### Available Content Blocks
 
-### Available Scripts
+- **High Impact Hero** - Full-screen hero sections with background images
+- **Call to Action** - Engaging CTA sections with buttons
+- **Content** - Rich text content areas
+- **Media** - Image and media displays with captions
 
-#### Backend (payload-backend/)
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run generate:types    # Generate TypeScript types
-```
+### Content Types
 
-#### Frontend (nextjs-frontend/)
-```bash
-npm run dev          # Start development server with Turbopack
-npm run build        # Build for production with Turbopack
-npm run start        # Start production server
-npm run lint         # Run ESLint v9
-```
+- **Pages** - Dynamic website pages with blocks
+- **Posts** - Blog posts with rich content
+- **Services** - Company services with pricing
+- **Team** - Team member profiles
+- **Categories** - Content categorization
+- **Tags** - Content tagging
+- **Media** - File uploads and management
+- **Contact** - Form submissions
+- **Newsletter** - Email subscriptions
 
-### Hot Reloading & Performance
+## 🐳 Docker Deployment
 
-Both frontend and backend support hot reloading with improved performance:
-
-- **Frontend**: Turbopack for faster builds (~736ms startup vs 1500ms+)
-- **Backend**: Automatic restart using tsx/nodemon
-- **Database**: Persistent storage with volumes
-- **Build Performance**: Turbopack provides up to 5x faster full builds
-- **Development**: Sub-second hot reloading with Turbopack
-
-## 📊 Content Management
-
-### Collections Available
-
-1. **Pages** - Static pages (About, Services, etc.)
-2. **Posts** - Blog posts and articles
-3. **Services** - Medical services and treatments
-4. **Team** - Staff and doctor profiles
-5. **Locations** - Office locations and contact info
-6. **Media** - Image and file uploads
-7. **Categories** - Content categorization
-8. **Tags** - Content tagging system
-9. **Users** - Admin and editor accounts
-
-### Key Features
-
-- **Rich Text Editor** - Lexical-based content editing
-- **Media Management** - Upload and organize files
-- **SEO Optimization** - Meta tags and structured data
-- **Multi-language Ready** - Internationalization support
-- **Role-based Access** - Admin, Editor, User roles
-- **API-first** - RESTful and GraphQL APIs
-
-## 🚀 Production Deployment
-
-### 1. Environment Setup
+### Development
 
 ```bash
-# Copy and update production environment
-cp .env.example .env.production
-
-# Update with production values
-nano .env.production
+docker-compose up -d
 ```
 
-### 2. Docker Production Deployment
+### Production
 
 ```bash
-# Start production services
 docker-compose -f docker-compose.prod.yml up -d
-
-# Scale services if needed
-docker-compose -f docker-compose.prod.yml up -d --scale nextjs-frontend=2
 ```
-
-### 3. SSL Configuration
-
-1. Obtain SSL certificates (Let's Encrypt recommended)
-2. Place certificates in `./ssl/` directory
-3. Uncomment HTTPS server block in `nginx.conf`
-4. Update environment variables with HTTPS URLs
-
-### 4. Production Checklist
-
-- [ ] Update all environment variables
-- [ ] Configure SSL certificates
-- [ ] Set up database backups
-- [ ] Configure monitoring and logging
-- [ ] Set up CI/CD pipeline
-- [ ] Configure CDN for static assets
-- [ ] Enable security headers
-- [ ] Set up error monitoring
 
 ## 🔧 Configuration
 
-### Payload CMS Configuration
+### Environment Variables
 
-Key configuration files:
-- `payload-backend/src/payload.config.ts` - Main configuration
-- `payload-backend/src/collections/` - Collection schemas
-
-### Next.js Configuration
-
-- `nextjs-frontend/next.config.js` - Next.js settings
-- `nextjs-frontend/tailwind.config.ts` - Tailwind configuration
-- `nextjs-frontend/tsconfig.json` - TypeScript settings
-
-### Database Configuration
-
-- MongoDB connection via `DATABASE_URI`
-- Automatic collection creation via `mongo-init.js`
-- Data seeding via `payload-backend/src/lib/seed.ts`
-
-## 🔐 Security
-
-### Authentication
-
-- JWT-based authentication
-- Secure password hashing with bcrypt
-- Role-based access control
-- Session management
-
-### Security Headers
-
-- CORS configuration
-- Helmet.js security headers
-- Rate limiting with Nginx
-- Input validation and sanitization
-
-### Best Practices
-
-- Environment variable encryption
-- Regular security updates
-- Database access controls
-- SSL/TLS encryption
-- Content Security Policy
-
-## 📖 API Documentation
-
-### REST API Endpoints
-
-```
-GET    /api/posts              # Get all posts
-GET    /api/posts/:id          # Get specific post
-POST   /api/posts              # Create new post (auth required)
-PUT    /api/posts/:id          # Update post (auth required)
-DELETE /api/posts/:id          # Delete post (auth required)
-
-GET    /api/services           # Get all services
-GET    /api/pages              # Get all pages
-GET    /api/team               # Get team members
-GET    /api/locations          # Get locations
+#### Backend (.env)
+```bash
+DATABASE_URI=mongodb://localhost:27017/payload
+PAYLOAD_SECRET=your-secret-key
+PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3100
+PORT=3100
 ```
 
-### GraphQL API
+#### Frontend (.env.local)
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:3100
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_NAME="Your Company"
+NEXT_PUBLIC_SITE_DESCRIPTION="Your description"
+```
 
-Available at: `http://localhost:3001/api/graphql`
+### Customization
+
+- **Styling**: Modify `tailwind.config.ts` for design changes
+- **Components**: Edit components in `src/components/`
+- **Blocks**: Create new content blocks in `src/payload/blocks/`
+- **Collections**: Modify collections in `src/collections/`
+
+## 📱 Frontend Pages
+
+- **Homepage** (`/`) - Displays featured content
+- **Services** (`/services`) - Lists all services
+- **Blog** (`/blog`) - Shows blog posts
+- **About** (`/about`) - Company information
+- **Contact** (`/contact`) - Contact form
+- **Dynamic Pages** (`/[slug]`) - CMS-created pages
+
+## 🚀 Production Deployment
+
+### 1. Build the Applications
+
+```bash
+# Backend
+cd cms-admin
+npm run build
+
+# Frontend
+cd nextjs-frontend
+npm run build
+```
+
+### 2. Environment Setup
+
+Create production environment files with:
+- Production database URLs
+- Secure secrets
+- Production domain URLs
+- SSL certificates
+
+### 3. Deploy with Docker
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
 
 ## 🧪 Testing
 
-### Running Tests
-
 ```bash
 # Backend tests
-cd payload-backend
-npm run test
+cd cms-admin
+npm test
 
 # Frontend tests
 cd nextjs-frontend
-npm run test
-
-# E2E tests
-npm run test:e2e
+npm test
 ```
 
-### Testing Strategy
+## 📊 Monitoring
 
-- Unit tests for utilities and helpers
-- Integration tests for API endpoints
-- Component testing for React components
-- E2E tests for critical user flows
+The production setup includes:
+- **Prometheus** - Metrics collection
+- **Grafana** - Data visualization
+- **Health Checks** - Service monitoring
+- **Logging** - Comprehensive logging
 
-## 🐛 Troubleshooting
+## 🔒 Security Features
+
+- **CORS Protection** - Configured for production
+- **CSRF Protection** - Built-in security
+- **User Authentication** - Role-based access control
+- **Input Validation** - Form and API validation
+- **Environment Isolation** - Separate dev/prod configs
+
+## 🆘 Troubleshooting
 
 ### Common Issues
 
-#### Database Connection Issues
-```bash
-# Check MongoDB connection
-docker-compose logs mongodb
+1. **Port 3100 not accessible**
+   - Check if cms-admin is running
+   - Verify .env file has correct PORT
+   - Check for port conflicts
 
-# Reset MongoDB data
-docker-compose down
-docker volume rm system-cms_mongodb_data
-docker-compose up -d
-```
+2. **MongoDB connection failed**
+   - Ensure MongoDB is running
+   - Check DATABASE_URI in .env
+   - Verify network connectivity
 
-#### Port Conflicts
+3. **Frontend can't connect to backend**
+   - Check NEXT_PUBLIC_API_URL in .env.local
+   - Ensure backend is running on port 3100
+   - Check CORS configuration
+
+### Debug Commands
+
 ```bash
-# Check which services are using ports
+# Check running processes
+ps aux | grep node
+
+# Check ports in use
 lsof -i :3000
-lsof -i :3001
-lsof -i :27017
+lsof -i :3100
 
-# Kill processes if needed
-kill -9 <PID>
+# Check Docker containers
+docker ps
+
+# View logs
+cd cms-admin && npm run dev
+cd nextjs-frontend && npm run dev
 ```
-
-#### Build Failures
-```bash
-# Clear Node modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# Clear Docker cache
-docker system prune -a
-```
-
-### Debugging
-
-#### Enable Debug Logging
-
-```bash
-# Backend debugging
-DEBUG=payload:* npm run dev
-
-# Frontend debugging
-NEXT_DEBUG=1 npm run dev
-```
-
-#### Database Debugging
-
-```bash
-# Connect to MongoDB directly
-docker exec -it medical-cms-mongodb mongosh -u admin -p password123
-
-# View collections
-use payload
-show collections
-db.posts.find().limit(5)
-```
-
-## 📚 Resources
-
-### Documentation
-
-- [Payload CMS Documentation](https://payloadcms.com/docs)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [shadcn/ui Documentation](https://ui.shadcn.com)
-
-### Community
-
-- [Payload CMS Discord](https://discord.gg/payload)
-- [Next.js Discord](https://discord.gg/nextjs)
-- [GitHub Issues](https://github.com/your-repo/issues)
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow TypeScript strict mode
-- Use Prettier for code formatting
-- Write tests for new features
-- Update documentation
-- Follow semantic commit messages
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
-## 📞 Support
+## 🆘 Support
 
-For support and questions:
-
-- 📧 Email: support@medicalcenter.com
-- 🐛 Issues: [GitHub Issues](https://github.com/your-repo/issues)
-- 💬 Discord: [Project Discord](https://discord.gg/your-discord)
-
-## 🙏 Acknowledgments
-
-- [Payload CMS Team](https://payloadcms.com) for the excellent headless CMS
-- [Vercel Team](https://vercel.com) for Next.js
-- [Tailwind Labs](https://tailwindlabs.com) for Tailwind CSS
-- [shadcn](https://github.com/shadcn) for the UI component library
+- **Documentation**: Check this README and inline code comments
+- **Issues**: Create GitHub issues for bugs or feature requests
+- **Community**: Join our community discussions
 
 ---
 
-## 📋 Recent Updates
+## 🎉 What You've Built
 
-### v2.0 - Latest Tech Stack Upgrade (2024)
+Congratulations! You now have a **production-ready headless CMS** that includes:
 
-✅ **Frontend Modernization:**
-- Upgraded to **Next.js 15.5.0** with Turbopack support
-- Updated to **React 19** with latest Server Components
-- Migrated to **Tailwind CSS v4** (tailwindcss@^4 + @tailwindcss/postcss)
-- Added **Framer Motion** for smooth animations
-- Upgraded to **ESLint v9** with @eslint/eslintrc compatibility
-- **Removed Zod** in favor of Yup for simpler validation
-- Performance: ~50% faster builds with Turbopack
+✅ **Full Content Management System** with Payload CMS v3  
+✅ **Modern Frontend** with Next.js 15 and Tailwind CSS v4  
+✅ **Advanced Content Blocks** for dynamic page building  
+✅ **Complete API Integration** between frontend and backend  
+✅ **Professional Admin Interface** for content management  
+✅ **Responsive Design** that works on all devices  
+✅ **SEO Optimization** with meta tags and Open Graph  
+✅ **Docker Support** for easy deployment  
+✅ **Production Configuration** with monitoring and security  
 
-✅ **Development Experience:**
-- **Turbopack** enabled for dev and build commands
-- Faster startup times (736ms vs 1500ms+)
-- Modern ESLint configuration
-- Improved type safety with React 19 types
-
-✅ **Package Management:**
-- All dependencies updated to latest compatible versions
-- Removed redundant packages (Zod, old Tailwind packages)
-- Added missing dependencies (Framer Motion, ESLint v9)
-
----
-
-**Built with ❤️ for healthcare professionals and medical practices**
+**Your System CMS is ready to power professional websites, blogs, and business applications!** 🚀

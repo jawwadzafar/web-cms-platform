@@ -16,6 +16,8 @@ import { Team } from './collections/Team'
 import { Categories } from './collections/Categories'
 import { Tags } from './collections/Tags'
 import { Locations } from './collections/Locations'
+import { Contact } from './collections/Contact'
+import { Newsletter } from './collections/Newsletter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,26 +28,56 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      url: ({ data, collection }) => {
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+        
+        if (collection.slug === 'posts' && data?.slug) {
+          return `${baseUrl}/blog/${data.slug}`
+        }
+        if (collection.slug === 'pages' && data?.slug) {
+          return `${baseUrl}/${data.slug}`
+        }
+        if (collection.slug === 'services' && data?.slug) {
+          return `${baseUrl}/services/${data.slug}`
+        }
+        
+        return baseUrl
+      },
+    },
   },
   collections: [
-    Users, 
-    Media, 
-    Pages, 
-    Posts, 
-    Services, 
-    Team, 
-    Categories, 
-    Tags, 
-    Locations
+    Users,
+    Media,
+    Pages,
+    Posts,
+    Services,
+    Team,
+    Categories,
+    Tags,
+    Locations,
+    Contact,
+    Newsletter,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  graphQL: {
+    schemaOutputFile: path.resolve(dirname, 'generated-schema.graphql'),
+  },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || 'mongodb://localhost:27017/payload',
   }),
+  cors: ['http://localhost:3000', 'http://localhost:3100'],
+  csrf: ['http://localhost:3000', 'http://localhost:3100'],
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3100',
+  upload: {
+    limits: {
+      fileSize: 10000000, // 10MB
+    },
+  },
   sharp,
   plugins: [
     payloadCloudPlugin(),

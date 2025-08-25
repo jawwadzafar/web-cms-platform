@@ -1,29 +1,28 @@
 import { CollectionConfig } from 'payload'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { slugField } from '@/payload/fields/slug'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'published', 'publishedDate', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'published', 'publishedDate', 'updatedAt'],
+    livePreview: {
+      url: ({ data }) => {
+        if (data?.slug) {
+          return `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog/${data.slug}`
+        }
+        return `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog`
+      },
+    },
+  },
+  access: {
+    read: () => true, // Public read access
   },
   fields: [
     {
       name: 'title',
       type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        description: 'URL path for this post (auto-generated if left empty)',
-      },
-    },
-    {
-      name: 'content',
-      type: 'richText',
       required: true,
     },
     {
@@ -39,6 +38,12 @@ export const Posts: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'content',
+      type: 'richText',
+      required: true,
+      editor: lexicalEditor({}),
     },
     {
       name: 'category',
@@ -71,6 +76,7 @@ export const Posts: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
         },
+        position: 'sidebar',
       },
     },
     {
@@ -79,11 +85,16 @@ export const Posts: CollectionConfig = {
       defaultValue: false,
       admin: {
         description: 'Display this post prominently on the homepage',
+        position: 'sidebar',
       },
     },
     {
       name: 'meta',
       type: 'group',
+      admin: {
+        description: 'SEO settings',
+        position: 'sidebar',
+      },
       fields: [
         {
           name: 'title',
@@ -106,8 +117,24 @@ export const Posts: CollectionConfig = {
             description: 'Comma-separated keywords for SEO',
           },
         },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Open Graph image for social sharing',
+          },
+        },
       ],
     },
+    ...slugField(),
   ],
   timestamps: true,
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100,
+      },
+    },
+  },
 }
