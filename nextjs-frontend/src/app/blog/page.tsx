@@ -132,36 +132,34 @@ export default async function BlogPage() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             {/* Sidebar */}
             <aside className="lg:col-span-1 space-y-8">
-              {/* Medical Categories */}
-              <div className="bg-card rounded-lg p-6 border border-l-4 border-l-blue-600">
-                <h3 className="text-lg font-semibold mb-4 text-blue-900">Medical Categories</h3>
-                <div className="space-y-2">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.id}
-                      href={`/blog/category/${category.slug}`}
-                      className="flex items-center justify-between p-2 rounded-md hover:bg-muted transition-colors"
-                    >
-                      <span className="text-sm">{category.name}</span>
-                      <Badge variant="secondary" className="text-xs">
-                        {category.postCount}
-                      </Badge>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Medical Newsletter Signup */}
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                <h3 className="text-lg font-semibold mb-3 text-blue-900">Stay Updated</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Get the latest medical insights and diagnostic advances delivered to your inbox.
-                </p>
-                <div className="space-y-3">
-                  <Input placeholder="Enter your email" className="text-sm" />
-                  <Button size="sm" className="w-full">
-                    Subscribe
-                  </Button>
+              {/* Medical Categories - Redesigned */}
+              <div className="group relative">
+                {/* 3D Border Effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-blue-500 to-indigo-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+                <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 to-indigo-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
+                
+                {/* Main Container */}
+                <div className="relative bg-white rounded-2xl shadow-xl p-6">
+                  <h3 className="text-xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    Medical Categories
+                  </h3>
+                  <div className="space-y-3">
+                    {categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        href={`/blog/category/${category.slug}`}
+                        className="group flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 transition-all duration-200 border border-transparent hover:border-blue-200"
+                      >
+                        <span className="text-sm font-medium text-gray-700 group-hover:text-blue-700 transition-colors">
+                          {category.name}
+                        </span>
+                        <Badge variant="outline" className="text-xs bg-blue-100 border-blue-200 text-blue-700 group-hover:bg-blue-200 transition-colors">
+                          {category.postCount}
+                        </Badge>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </aside>

@@ -1,6 +1,6 @@
 import { ContactForm } from '@/components/forms/ContactForm'
 import { ModernButton } from '@/components/custom/modern-button'
-import { MapPin, Phone, Mail, Clock, Building, MessageCircle, Microscope, Dna, FlaskConical, Send, Globe, Shield } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Building, MessageCircle, Microscope, Dna, FlaskConical, Send, Shield } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata = {
@@ -83,117 +83,100 @@ export default function ContactPage() {
       {/* Contact Form & Information */}
       <section className="py-32 bg-white" id="contact-form">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-            {/* Contact Form */}
-            <div className="space-y-8">
-              <div className="relative">
-                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-green-500 to-transparent"></div>
-                <div className="pl-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-green-100 rounded-lg">
-                      <Send className="h-6 w-6 text-green-600" />
-                    </div>
-                    <h3 className="text-2xl font-light text-gray-900">Send Us a Message</h3>
+          {/* Send Us a Message Block - Full Width */}
+          <div className="mb-20">
+            <div className="relative">
+              <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-green-500 to-transparent"></div>
+              <div className="pl-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-green-100 rounded-lg">
+                    <Send className="h-6 w-6 text-green-600" />
                   </div>
-                  <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                    Contact us for diagnostic services, partnership opportunities, or general inquiries. 
-                    Our team will respond within 24 hours with professional guidance.
-                  </p>
+                  <h3 className="text-2xl font-light text-gray-900">Send Us a Message</h3>
                 </div>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  Contact us for diagnostic services, partnership opportunities, or general inquiries. 
+                  Our team will respond within 24 hours with professional guidance.
+                </p>
               </div>
+            </div>
+            
+            <div className="group relative max-w-2xl">
+              {/* 3D Border Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-green-500 to-emerald-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-green-600 to-emerald-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
               
-              <div className="group relative">
-                {/* 3D Border Effect */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-green-500 to-emerald-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
-                <div className="absolute -inset-2 bg-gradient-to-br from-green-600 to-emerald-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
-                
-                {/* Main Form Container */}
-                <div className="relative bg-white rounded-2xl shadow-2xl p-8">
-                  <ContactForm />
+              {/* Main Form Container */}
+              <div className="relative bg-white rounded-2xl shadow-2xl p-8">
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+
+          {/* Our Locations - Left Right Boxes */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Abu Dhabi Headquarters */}
+            <div className="group relative">
+              {/* 3D Border Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-blue-500 to-indigo-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 to-indigo-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
+              
+              {/* Main Card */}
+              <div className="relative bg-white rounded-2xl shadow-2xl p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
+                    <Building className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-medium text-blue-900">Abu Dhabi Headquarters</h4>
+                    <p className="text-blue-600 font-medium">Main Office</p>
+                  </div>
+                </div>
+                <div className="space-y-3 text-gray-600">
+                  <p className="font-medium">Sanimed International</p>
+                  <p>Abu Dhabi, United Arab Emirates</p>
+                  <div className="space-y-2 pt-2">
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-blue-600" />
+                      <span className="font-medium">+971-2-6767676</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Mail className="w-4 h-4 text-blue-600" />
+                      <span>customercare@sanimedgroup.com</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Contact Information & Locations */}
-            <div className="space-y-8">
-              {/* UAE Locations */}
-              <div className="relative">
-                <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-500 to-transparent"></div>
-                <div className="pl-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-blue-100 rounded-lg">
-                      <Globe className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <h3 className="text-2xl font-light text-gray-900">Our Locations</h3>
+            {/* Sharjah Branch */}
+            <div className="group relative">
+              {/* 3D Border Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500 to-green-700 transform rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:rotate-2"></div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-emerald-600 to-green-800 transform -rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:-rotate-2"></div>
+              
+              {/* Main Card */}
+              <div className="relative bg-white rounded-2xl shadow-2xl p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-4 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg">
+                    <Building className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-medium text-green-900">Sharjah Branch</h4>
+                    <p className="text-green-600 font-medium">Regional Office</p>
                   </div>
                 </div>
-              </div>
-
-              <div className="space-y-8">
-                {/* Abu Dhabi Headquarters */}
-                <div className="group relative">
-                  {/* 3D Border Effect */}
-                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-500 to-indigo-700 transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2"></div>
-                  <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 to-indigo-800 transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2"></div>
-                  
-                  {/* Main Card */}
-                  <div className="relative bg-white rounded-2xl shadow-2xl p-8">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
-                        <Building className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-medium text-blue-900">Abu Dhabi Headquarters</h4>
-                        <p className="text-blue-600 font-medium">Main Office</p>
-                      </div>
+                <div className="space-y-3 text-gray-600">
+                  <p className="font-medium">Sanimed International</p>
+                  <p>Sharjah, United Arab Emirates</p>
+                  <div className="space-y-2 pt-2">
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-green-600" />
+                      <span className="font-medium">+971-6-5555555</span>
                     </div>
-                    <div className="space-y-3 text-gray-600">
-                      <p className="font-medium">Sanimed International</p>
-                      <p>Abu Dhabi, United Arab Emirates</p>
-                      <div className="space-y-2 pt-2">
-                        <div className="flex items-center gap-3">
-                          <Phone className="w-4 h-4 text-blue-600" />
-                          <span className="font-medium">+971-2-6767676</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Mail className="w-4 h-4 text-blue-600" />
-                          <span>customercare@sanimedgroup.com</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Sharjah Branch */}
-                <div className="group relative">
-                  {/* 3D Border Effect */}
-                  <div className="absolute -inset-4 bg-gradient-to-br from-emerald-500 to-green-700 transform rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:rotate-2"></div>
-                  <div className="absolute -inset-2 bg-gradient-to-br from-emerald-600 to-green-800 transform -rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:-rotate-2"></div>
-                  
-                  {/* Main Card */}
-                  <div className="relative bg-white rounded-2xl shadow-2xl p-8">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="p-4 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg">
-                        <Building className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-medium text-green-900">Sharjah Branch</h4>
-                        <p className="text-green-600 font-medium">Regional Office</p>
-                      </div>
-                    </div>
-                    <div className="space-y-3 text-gray-600">
-                      <p className="font-medium">Sanimed International</p>
-                      <p>Sharjah, United Arab Emirates</p>
-                      <div className="space-y-2 pt-2">
-                        <div className="flex items-center gap-3">
-                          <Phone className="w-4 h-4 text-green-600" />
-                          <span className="font-medium">+971-6-5555555</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Mail className="w-4 h-4 text-green-600" />
-                          <span>sharjah@sanimedgroup.com</span>
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-3">
+                      <Mail className="w-4 h-4 text-green-600" />
+                      <span>sharjah@sanimedgroup.com</span>
                     </div>
                   </div>
                 </div>
