@@ -9,14 +9,14 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">M</span>
+              <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">S</span>
               </div>
-              <span className="font-bold">Medical Center</span>
+              <span className="font-bold">Sanimed International</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Providing exceptional healthcare services with compassion and expertise. 
-              Your health and well-being are our top priorities.
+              Leading molecular diagnostics, genetics, and clinical laboratory services. 
+              Advancing precision medicine in the UAE.
             </p>
           </div>
 
@@ -39,21 +39,18 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Services */}
+          {/* Our Services */}
           <div className="space-y-4">
-            <h3 className="font-semibold">Services</h3>
+            <h3 className="font-semibold">Our Services</h3>
             <nav className="flex flex-col space-y-2">
-              <Link href="/services/general-medicine" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                General Medicine
+              <Link href="/services/molecular-diagnostics" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Molecular Diagnostics
               </Link>
-              <Link href="/services/cardiology" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Cardiology
+              <Link href="/services/genetics" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Genetics
               </Link>
-              <Link href="/services/pediatrics" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Pediatrics
-              </Link>
-              <Link href="/services/dermatology" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Dermatology
+              <Link href="/services/clinical-diagnostics" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Clinical Diagnostics
               </Link>
             </nav>
           </div>
@@ -65,24 +62,26 @@ export function Footer() {
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 mt-0.5 text-muted-foreground" />
                 <div className="text-sm text-muted-foreground">
-                  <p>123 Medical Drive</p>
-                  <p>Healthcare City, HC 12345</p>
+                  <p>Abu Dhabi & Sharjah</p>
+                  <p>United Arab Emirates</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">(555) 123-4567</span>
+                <div className="text-sm text-muted-foreground">
+                  <p>Abu Dhabi: +971-2-6767676</p>
+                  <p>Sharjah: +971-6-5644445</p>
+                </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">info@medicalcenter.com</span>
+                <span className="text-sm text-muted-foreground">customercare@sanimedgroup.com</span>
               </div>
               <div className="flex items-start space-x-2">
                 <Clock className="w-4 h-4 mt-0.5 text-muted-foreground" />
                 <div className="text-sm text-muted-foreground">
-                  <p>Mon-Fri: 8:00 AM - 6:00 PM</p>
-                  <p>Sat: 9:00 AM - 4:00 PM</p>
-                  <p>Sun: Emergency Only</p>
+                  <p>Laboratory Services</p>
+                  <p>24/7 Emergency Testing</p>
                 </div>
               </div>
             </div>
@@ -92,7 +91,7 @@ export function Footer() {
         <div className="border-t mt-8 pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Medical Center. All rights reserved.
+              © {new Date().getFullYear()} Sanimed International. All rights reserved.
             </p>
             <div className="flex space-x-4">
               <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">

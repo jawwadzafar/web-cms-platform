@@ -24,24 +24,24 @@ const services = [
     iconColor: 'text-blue-600',
     bgColor: 'from-blue-50 to-blue-100',
     borderColor: 'border-l-blue-600',
-    description: 'Advanced molecular testing using cutting-edge technology to detect genetic variations, infectious diseases, and cancer biomarkers with exceptional accuracy.',
-    detailedDescription: 'Our molecular diagnostics division employs state-of-the-art PCR, next-generation sequencing (NGS), and other advanced technologies to provide precise molecular analysis. We specialize in detecting genetic mutations, infectious pathogens, and oncological markers that are crucial for accurate diagnosis and personalized treatment plans.',
+    description: 'We have tested samples from all over the UAE – Abu Dhabi, Al Ain, Ruwais, Dubai, Sharjah, Ajman, Fujairah and Ras Al Khaimah. We have presence in a total of 62 swab collection sites.',
+    detailedDescription: 'Sanimed\'s molecular diagnostics division serves the entire UAE with comprehensive testing capabilities. Our extensive network of 62 collection sites ensures accessible testing across all emirates, from major cities to remote areas. We utilize advanced molecular testing technologies to provide accurate and reliable results for healthcare providers throughout the region.',
     features: [
-      'Real-time PCR and qPCR testing',
-      'Next-generation sequencing (NGS)',
-      'Genetic mutation analysis',
-      'Infectious disease detection',
-      'Cancer biomarker identification',
-      'Pharmacogenomic testing',
-      'Rapid turnaround times',
-      'High accuracy and sensitivity'
+      'UAE-wide coverage with 62 collection sites',
+      'Advanced PCR and molecular testing',
+      'COVID-19 and infectious disease testing',
+      'Pathogen detection and identification',
+      'Antibiotic resistance testing',
+      'Viral load monitoring',
+      'Rapid molecular diagnostics',
+      'Quality assured results'
     ],
     applications: [
-      'Oncology: Cancer biomarker detection and monitoring',
-      'Infectious Diseases: Pathogen identification and antibiotic resistance',
-      'Pharmacogenomics: Drug metabolism and response prediction',
-      'Inherited Disorders: Genetic mutation screening',
-      'Personalized Medicine: Treatment optimization'
+      'COVID-19 Testing: RT-PCR and rapid antigen testing across UAE',
+      'Infectious Diseases: Comprehensive pathogen identification',
+      'Public Health: Large-scale screening and surveillance',
+      'Hospital Support: Emergency and routine molecular testing',
+      'Remote Areas: Mobile collection and testing services'
     ]
   },
   {
@@ -51,8 +51,8 @@ const services = [
     iconColor: 'text-green-600',
     bgColor: 'from-green-50 to-green-100',
     borderColor: 'border-l-green-600',
-    description: 'Comprehensive genetic testing and analysis services including hereditary disease screening, pharmacogenomics, and personalized medicine solutions.',
-    detailedDescription: 'Our genetics department provides comprehensive genetic testing services, from single gene analysis to whole exome sequencing. We offer genetic counseling and interpretation services to help healthcare providers and patients understand genetic test results and their clinical implications.',
+    description: 'Sanimed lab is equipped with the latest technology for molecular diagnostics in Genetics. Our comprehensive range of tests is designed to support clinicians in making effective treatment decisions.',
+    detailedDescription: 'Our genetics laboratory utilizes cutting-edge molecular diagnostic technologies to provide comprehensive genetic testing services. We support clinicians with advanced genetic analysis capabilities, enabling precise diagnosis and personalized treatment approaches for optimal patient outcomes.',
     features: [
       'Hereditary disease screening',
       'Carrier testing',
@@ -78,17 +78,17 @@ const services = [
     iconColor: 'text-purple-600',
     bgColor: 'from-purple-50 to-purple-100',
     borderColor: 'border-l-purple-600',
-    description: 'Full range of clinical laboratory services including biochemistry, hematology, immunology, and microbiology to support comprehensive patient care.',
-    detailedDescription: 'Our clinical diagnostics laboratory provides comprehensive routine and specialized testing services. We maintain the highest standards of quality and accuracy, with rapid turnaround times to support clinical decision-making and patient care.',
+    description: 'Sanimed Laboratory offers a wide variety of tests with high precision using the best technology.',
+    detailedDescription: 'Our clinical diagnostics laboratory provides comprehensive testing across multiple specialties including clinical biochemistry, hematology, coagulation, special chemistry, serology, immunology, and transfusion medicine. We utilize the latest technology to ensure high precision and accurate results for optimal patient care.',
     features: [
-      'Complete blood count (CBC)',
-      'Comprehensive metabolic panel',
-      'Lipid profiles and cardiac markers',
-      'Hormone and endocrine testing',
-      'Immunology and serology',
-      'Microbiology and culture',
-      'Coagulation studies',
-      'Therapeutic drug monitoring'
+      'Clinical Biochemistry',
+      'Hematology & Coagulation',
+      'Special Chemistry',
+      'Serology Testing',
+      'Immunology',
+      'Transfusion Medicine',
+      'High-precision technology',
+      'Quality assured results'
     ],
     applications: [
       'Routine Health Screening: Annual checkups and wellness monitoring',
@@ -104,117 +104,145 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-background to-green-50 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            Our <span className="text-blue-600">Services</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Sanimed International offers three core areas of expertise in advanced diagnostics, 
-            delivering comprehensive healthcare solutions across the UAE.
-          </p>
-          <div className="flex justify-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Check className="h-4 w-4 text-green-600" />
-              <span>CAP Accredited</span>
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 py-32">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLW9wYWNpdHk9IjAuMDUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-blue-900/20"></div>
+          
+          {/* Floating Elements */}
+          <div className="absolute top-20 left-10 w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-1 h-1 bg-purple-300 rounded-full animate-ping"></div>
+          <div className="absolute bottom-32 left-1/4 w-3 h-3 bg-indigo-300 rounded-full animate-bounce"></div>
+          <div className="absolute bottom-20 right-1/3 w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-300"></div>
+        </div>
+        
+        <div className="relative container mx-auto px-4 text-center">
+          <div className="animate-fade-in">
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 mb-8 border border-white/20">
+              <span className="text-blue-200 text-sm font-medium">Advanced Diagnostics • UAE-wide Coverage</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Check className="h-4 w-4 text-green-600" />
-              <span>ISO 15189 Certified</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Check className="h-4 w-4 text-green-600" />
-              <span>24/7 Support</span>
+            
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-white">
+              Our <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">Services</span>
+            </h1>
+            <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-12 leading-relaxed">
+              Sanimed International delivers three core areas of expertise in advanced molecular diagnostics, 
+              genetics, and clinical laboratory services across the United Arab Emirates.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-blue-100">CAP Accredited</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-150"></div>
+                <span className="text-blue-100">ISO 15189 Certified</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-300"></div>
+                <span className="text-blue-100">62 Collection Sites</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="space-y-20">
+          <div className="space-y-32">
             {services.map((service, index) => (
-              <div key={service.id} className={`${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div key={service.id} className="group">
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${index % 2 === 1 ? 'lg:grid-cols-2' : ''}`}>
                   {/* Service Overview */}
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className={`bg-gradient-to-br ${service.bgColor} rounded-full p-4`}>
-                        <service.icon className={`h-12 w-12 ${service.iconColor}`} />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-bold mb-2">{service.title}</h2>
-                        <Badge variant="secondary" className="text-xs">
-                          Core Service
-                        </Badge>
+                  <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <div className="relative">
+                      {/* Glowing background effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-r ${service.bgColor} rounded-3xl blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700`}></div>
+                      
+                      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-2xl group-hover:shadow-3xl transition-all duration-700 group-hover:transform group-hover:scale-[1.02]">
+                        <div className="flex items-center gap-6 mb-8">
+                          <div className={`relative bg-gradient-to-br ${service.bgColor} rounded-2xl p-6 shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:transform group-hover:rotate-3`}>
+                            <service.icon className={`h-16 w-16 ${service.iconColor} group-hover:scale-110 transition-transform duration-500`} />
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+                          </div>
+                          <div>
+                            <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                              {service.title}
+                            </h2>
+                            <div className="flex items-center gap-2">
+                              <Badge variant="secondary" className="text-xs font-semibold bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 border-0">
+                                Core Service
+                              </Badge>
+                              <div className={`w-2 h-2 ${service.iconColor.replace('text-', 'bg-')} rounded-full animate-pulse`}></div>
+                            </div>
+                          </div>
+                        </div>
+                    
+                        <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                          {service.detailedDescription}
+                        </p>
+
+                        <div className="space-y-6">
+                          <h3 className="text-xl font-semibold text-gray-800">Key Features</h3>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {service.features.map((feature, featureIndex) => (
+                              <div key={featureIndex} className="flex items-center gap-3 group/feature">
+                                <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full group-hover/feature:scale-150 transition-transform duration-300"></div>
+                                <span className="text-sm text-gray-700 group-hover/feature:text-gray-900 transition-colors duration-300">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      {service.detailedDescription}
-                    </p>
+                  </div>
 
-                    <Card className={`border-l-4 ${service.borderColor}`}>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Key Features</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {service.features.map((feature, featureIndex) => (
-                            <div key={featureIndex} className="flex items-center gap-2">
-                              <Check className="h-4 w-4 text-green-600 flex-shrink-0" />
-                              <span className="text-sm">{feature}</span>
+                  {/* Applications & Image */}
+                  <div className={`space-y-8 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <div className="relative group/image">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl blur-2xl group-hover/image:blur-3xl transition-all duration-700"></div>
+                      <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20 group-hover/image:shadow-3xl transition-all duration-700">
+                        <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                          Clinical Applications
+                        </h3>
+                        <div className="space-y-6">
+                          {service.applications.map((application, appIndex) => (
+                            <div key={appIndex} className="group/app p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-purple-50 transition-all duration-300 border border-gray-200/50 hover:border-blue-200 hover:shadow-lg">
+                              <div className="font-semibold text-gray-900 mb-2 group-hover/app:text-blue-800 transition-colors">
+                                {application.split(':')[0]}
+                              </div>
+                              <div className="text-sm text-gray-600 group-hover/app:text-gray-700 transition-colors">
+                                {application.split(':')[1]}
+                              </div>
                             </div>
                           ))}
                         </div>
-                      </CardContent>
-                    </Card>
-                  </div>
+                      </div>
+                    </div>
 
-                  {/* Applications */}
-                  <div className="space-y-6">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-xl">Clinical Applications</CardTitle>
-                        <CardDescription>
-                          Key areas where our {service.title.toLowerCase()} services make a difference
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        {service.applications.map((application, appIndex) => (
-                          <div key={appIndex} className="border-l-2 border-gray-200 pl-4">
-                            <div className="font-medium text-sm">
-                              {application.split(':')[0]}
+                    <div className="relative group/cta">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${service.bgColor} rounded-3xl blur-2xl opacity-30 group-hover/cta:opacity-40 transition-opacity duration-700`}></div>
+                      <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/20 group-hover/cta:shadow-2xl transition-all duration-700">
+                        <h3 className="text-xl font-bold mb-6 text-gray-900">Why Choose Our {service.title}?</h3>
+                        <div className="space-y-4">
+                          {[
+                            'State-of-the-art technology and equipment',
+                            'Expert team of certified professionals', 
+                            'Rapid turnaround times',
+                            'Comprehensive reporting and consultation'
+                          ].map((item, itemIndex) => (
+                            <div key={itemIndex} className="flex items-center gap-3 group/item">
+                              <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300">
+                                <Check className="h-3 w-3 text-white" />
+                              </div>
+                              <span className="text-sm text-gray-700 group-hover/item:text-gray-900 transition-colors">{item}</span>
                             </div>
-                            <div className="text-sm text-muted-foreground">
-                              {application.split(':')[1]}
-                            </div>
-                          </div>
-                        ))}
-                      </CardContent>
-                    </Card>
-
-                    <div className={`bg-gradient-to-br ${service.bgColor} rounded-lg p-6`}>
-                      <h3 className="font-semibold mb-3">Why Choose Our {service.title}?</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          <span>State-of-the-art technology and equipment</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          <span>Expert team of certified professionals</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          <span>Rapid turnaround times</span>
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          <span>Comprehensive reporting and consultation</span>
-                        </li>
-                      </ul>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -224,151 +252,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Specialty Services */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Specialty Medical Services</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive specialty services with advanced diagnostic capabilities across multiple medical disciplines.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-red-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-red-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-red-200 transition-colors">
-                  <Heart className="h-12 w-12 text-red-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Cardiology</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Comprehensive cardiovascular care with advanced cardiac diagnostics, emergency services, and preventive care.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/cardiology">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-yellow-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-yellow-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-yellow-200 transition-colors">
-                  <Zap className="h-12 w-12 text-yellow-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Endocrinology</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Hormone testing and endocrine disorders diagnosis including diabetes, thyroid, and metabolic conditions.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/endocrinology">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-indigo-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-indigo-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-indigo-200 transition-colors">
-                  <Brain className="h-12 w-12 text-indigo-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Neurology</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Neurological testing and brain health diagnostics for comprehensive neurological care and assessment.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/neurology">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-green-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-green-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                  <Bone className="h-12 w-12 text-green-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Orthopedics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Bone and joint health diagnostics with advanced imaging and laboratory support for orthopedic care.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/orthopedics">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-pink-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-pink-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-pink-200 transition-colors">
-                  <Eye className="h-12 w-12 text-pink-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Dermatology</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Skin health diagnostics and dermatological testing for comprehensive skin care and treatment support.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/dermatology">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-lg transition-all duration-300 border-l-4 border-l-teal-600">
-              <CardHeader className="text-center pb-4">
-                <div className="bg-teal-100 rounded-full p-4 w-20 h-20 mx-auto mb-4 group-hover:bg-teal-200 transition-colors">
-                  <Microscope className="h-12 w-12 text-teal-600" />
-                </div>
-                <CardTitle className="text-xl mb-2">Radiology</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-base leading-relaxed mb-4">
-                  Advanced imaging services and radiological diagnostics with state-of-the-art equipment and expertise.
-                </CardDescription>
-                <div className="text-center">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/services/radiology">
-                      Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
 
       {/* R&D Section */}
       <section className="py-20 bg-gradient-to-r from-orange-50 to-orange-100">
