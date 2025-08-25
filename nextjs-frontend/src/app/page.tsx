@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ModernButton, SplineBackground } from '@/components/custom'
-import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, Users, Globe } from 'lucide-react'
+import { ArrowRight, Microscope, Dna, FlaskConical, Phone, Mail, Users, Globe, Calendar } from 'lucide-react'
 import { api } from '@/lib/api-client'
 
 export const metadata: Metadata = {
@@ -33,12 +33,12 @@ interface FeaturedPost {
 
 async function getHomepageData() {
   try {
-    const [featuredPosts] = await Promise.all([
-      api.posts.getFeatured(),
+    const [latestPosts] = await Promise.all([
+      api.posts.getAll({ limit: 3, sort: '-publishedDate' }),
     ])
 
     return {
-      posts: featuredPosts.data.docs || [],
+      posts: latestPosts.data.docs || [],
     }
   } catch (error) {
     console.error('Failed to fetch homepage data:', error)
@@ -117,15 +117,15 @@ export default async function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <ModernButton 
               asChild 
-              variant="primary"
-              size="xl"
+              variant="outline"
+              size="lg"
             >
               <Link href="/services">
                 Explore Services
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </ModernButton>
-            <ModernButton 
+            {/* <ModernButton 
               variant="outline"
               size="xl"
               asChild
@@ -133,7 +133,7 @@ export default async function HomePage() {
               <Link href="/contact">
                 Contact Our Experts
               </Link>
-            </ModernButton>
+            </ModernButton> */}
           </div>
           
           <div className="flex justify-center">
@@ -380,6 +380,117 @@ export default async function HomePage() {
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </ModernButton>
+        </div>
+      </section>
+
+      {/* Latest Blog Posts */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-20">
+            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 block">
+              Latest Insights
+            </span>
+            <h2 className="text-5xl md:text-6xl font-light text-gray-900 mb-8 leading-tight">
+              Medical Content
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Stay updated with the latest in molecular diagnostics, precision medicine, and healthcare innovation.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {posts.length > 0 ? (
+              posts.map((post: any, index: number) => {
+                const gradientColors = [
+                  'from-blue-500 to-indigo-700',
+                  'from-green-500 to-emerald-700', 
+                  'from-purple-500 to-violet-700'
+                ]
+                const hoverColors = [
+                  'group-hover:text-blue-600',
+                  'group-hover:text-green-600',
+                  'group-hover:text-purple-600'
+                ]
+                
+                return (
+                  <div key={post.id} className="group relative">
+                    {/* 3D Border Effect */}
+                    <div className={`absolute -inset-3 bg-gradient-to-br ${gradientColors[index]} transform -rotate-1 rounded-2xl opacity-20 group-hover:opacity-30 transition-all duration-500 group-hover:-rotate-2`}></div>
+                    <div className={`absolute -inset-2 bg-gradient-to-br ${gradientColors[index].replace('500', '600').replace('700', '800')} transform rotate-1 rounded-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 group-hover:rotate-2`}></div>
+                    
+                    {/* Main Card */}
+                    <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500">
+                      <div className="relative h-48 w-full">
+                        {post.featuredImage ? (
+                          <Image
+                            src={post.featuredImage.url}
+                            alt={post.featuredImage.alt || post.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                            <div className="text-gray-400 text-center">
+                              <div className="w-12 h-12 bg-gray-300 rounded-full mx-auto mb-2"></div>
+                              <span className="text-sm">No Image</span>
+                            </div>
+                          </div>
+                        )}
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                      </div>
+                      <div className="p-8">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                          <Calendar className="h-4 w-4" />
+                          <span>{post.publishedDate ? new Date(post.publishedDate).toLocaleDateString() : 'Coming Soon'}</span>
+                        </div>
+                        <h3 className={`font-bold text-xl line-clamp-2 text-gray-900 ${hoverColors[index]} transition-colors mb-4 leading-tight`}>
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-600 line-clamp-3 mb-6">
+                          {post.excerpt || 'Medical insights and diagnostic updates from our expert team.'}
+                        </p>
+                        <ModernButton 
+                          asChild 
+                          variant="outline-dark"
+                          className="w-full"
+                        >
+                          <Link href={`/blog/${post.slug}`}>
+                            Read More
+                            <ArrowRight className="ml-2 w-4 h-4" />
+                          </Link>
+                        </ModernButton>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+            ) : (
+              // Fallback when no posts are available
+              <div className="col-span-3 text-center py-16">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-6">
+                  <Calendar className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Medical Content Coming Soon</h3>
+                <p className="text-gray-600 max-w-md mx-auto">
+                  We're preparing exciting medical insights and diagnostic updates. Check back soon for the latest in molecular diagnostics and precision medicine.
+                </p>
+              </div>
+            )}
+          </div>
+          
+          <div className="text-center mt-12">
+            <ModernButton 
+              asChild 
+              variant="secondary"
+              size="lg"
+            >
+              <Link href="/blog">
+                View All Posts
+                <ArrowRight className="ml-2 w-4 w-4" />
+              </Link>
+            </ModernButton>
+          </div>
         </div>
       </section>
 

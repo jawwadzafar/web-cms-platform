@@ -87,9 +87,9 @@ export default async function BlogPage() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-light tracking-tight mb-8">
-              Medical
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-extralight">
-                Insights
+              Our
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400 font-extralight pb-2">
+                Blogs
               </span>
             </h1>
             
@@ -99,7 +99,7 @@ export default async function BlogPage() {
             </p>
             
             {/* Search Bar */}
-            <div className="max-w-md mx-auto relative mb-12">
+            {/* <div className="max-w-md mx-auto relative mb-12">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
@@ -116,7 +116,7 @@ export default async function BlogPage() {
               <ModernButton variant="outline" size="lg" asChild>
                 <Link href="/contact">Subscribe</Link>
               </ModernButton>
-            </div>
+            </div> */}
           </div>
           
           {/* Scroll indicator */}
